@@ -50,9 +50,7 @@
         body.grand-mode .tab-button.active { color: #ffd700; text-shadow: 0 0 10px #ffd700; border-bottom-color: #ffd700; }
         @keyframes grandPulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
 
-        /* ==========================================
-           로딩 화면
-           ========================================== */
+        /* 로딩 화면 */
         #loading-screen {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: #05050a; z-index: 10000;
@@ -156,7 +154,7 @@
         .map-node { cursor: pointer; outline: none; -webkit-tap-highlight-color: transparent; }
         .map-node:hover .node-circle, .map-node:active .node-circle { fill: #fff; filter: brightness(1.5); }
         .node-circle { fill: #000; stroke-width: 2; transition: all 0.2s; }
-        .node-label { font-family: 'Pretendard', sans-serif; font-size: 12px; fill: #d1d5db; font-weight: bold; pointer-events: none; }
+        .node-label { font-family: 'Pretendard', sans-serif; font-size: 12px; fill: #d1d5db; font-weight: bold; pointer-events: none; transition: all 0.2s; }
         .node-sub { font-size: 9px; font-family: 'Pretendard', sans-serif; fill: rgba(255,255,255,0.7); pointer-events: none; }
         @keyframes pulse { 0% { r: 4; opacity: 1; } 100% { r: 15; opacity: 0; } }
         .pulse-ring { fill: none; stroke-width: 1; animation: pulse 2s infinite; pointer-events: none; }
@@ -193,14 +191,12 @@
         </div>
     </div>
     
-    <!-- 🟢 2. 인트로 화면 (사전에 로드되어 로딩창 밑에 숨겨져 있음. 깜빡임 방지) -->
-    <!-- 'hidden' 클래스를 제거하여 로딩화면 바로 밑에 완벽히 렌더링되도록 함 -->
+    <!-- 🟢 2. 인트로 화면 (사전에 밑에 렌더링 되어 깜빡임 방지) -->
     <div id="intro-screen">
         <div class="intro-title">
             CIEL ACADEMY<br>OS
             <span>SYSTEM INITIALIZATION...</span>
         </div>
-        <!-- 비영리 명시 -->
         <div class="disclaimer">본 사이트는 비영리 목적으로 제작되었습니다. (Non-Profit)</div>
         <button class="enter-btn" onclick="enterSite()"></button>
     </div>
@@ -222,7 +218,7 @@
 
     <header>
         <h1>CIEL ACADEMY</h1>
-        <p style="color:#00f3ff; font-size:0.8rem; font-family:'Orbitron';">DB_VER: NEO-HUNTER_OS v2.4</p>
+        <p style="color:#00f3ff; font-size:0.8rem; font-family:'Orbitron';">DB_VER: NEO-HUNTER_OS v3.0</p>
     </header>
 
     <!-- 탭 메뉴 -->
@@ -242,27 +238,27 @@
             <div class="cyber-card" style="padding-left: 10px;">
                 <div class="timeline">
                     <div class="timeline-item">
-                        <div class="timeline-date">REC. 0001</div>
+                        <div class="timeline-date">100년 전</div>
                         <div class="timeline-title">최초의 게이트 발생</div>
-                        <div class="timeline-desc">전 세계에 게이트가 동시다발적으로 생성되며, 인류의 마력 각성이 시작됨.</div>
+                        <div class="timeline-desc">전 세계에 게이트가 동시다발적으로 생성되며, 인류의 마력 각성이 시작됨. 독도 상공에 불명의 초대형 게이트 또한 이때 함께 발생함.</div>
                     </div>
                     <div class="timeline-item alert">
-                        <div class="timeline-date" style="color:#ff003c;">REC. 0004</div>
+                        <div class="timeline-date" style="color:#ff003c;">96년 전</div>
                         <div class="timeline-title txt-red">첫 게이트 브레이크</div>
                         <div class="timeline-desc">게이트가 붕괴하여 몬스터가 현실로 쏟아져 나오는 대참사 최초 발생.</div>
                     </div>
                     <div class="timeline-item alert">
-                        <div class="timeline-date" style="color:#ff003c;">REC. 0009</div>
+                        <div class="timeline-date" style="color:#ff003c;">91년 전</div>
                         <div class="timeline-title txt-red">첫 레드 게이트</div>
                         <div class="timeline-desc">통신이 두절되고 보스 처치 전까지 탈출할 수 없는 변칙 게이트 등장.</div>
                     </div>
                     <div class="timeline-item">
-                        <div class="timeline-date">REC. 0012</div>
+                        <div class="timeline-date">88년 전</div>
                         <div class="timeline-title">'사냥개' 관측</div>
                         <div class="timeline-desc">레드 게이트 내부에서 헌터만을 사냥하는 악질 PK 범죄 조직 최초 확인.</div>
                     </div>
                     <div class="timeline-item">
-                        <div class="timeline-date">REC. 0015 (현재)</div>
+                        <div class="timeline-date">50년 전</div>
                         <div class="timeline-title txt-cyan">아카데미 설립</div>
                         <div class="timeline-desc">차세대 최정예 헌터 양성을 목표로 인천 해상에 '시엘 아카데미' 전격 설립.</div>
                     </div>
@@ -275,14 +271,25 @@
                     <h5>🔵 마력과 각성 <span style="font-size: 0.75rem; color: #00f3ff; font-family: 'Orbitron';">[MANA & AWAKEN]</span></h5>
                     <p>평범한 인류가 미지의 에너지인 <span class="txt-cyan">'마력'</span>을 다루게 되는 돌연변이 현상입니다.</p>
                 </div>
+                <div class="guild-card" style="border-color: #10b981;">
+                    <h5>💎 마석 <span style="font-size: 0.75rem; color: #10b981; font-family: 'Orbitron';">[MANA STONE]</span></h5>
+                    <p>몬스터의 사체에서 추출되는 현대 인류의 <strong>가장 중요한 핵심 자원</strong>입니다. 아티팩트의 동력원부터 도시의 전력까지 모든 곳에 쓰이며, 등급에 따라 가격이 천차만별입니다. (F급 약 100만 원 / C급 약 5,000만 원 / S급 50억 원 이상)</p>
+                </div>
                 <div class="guild-card" style="border-color: #f59e0b;">
-                    <h5>💎 아티팩트 <span style="font-size: 0.75rem; color: #f59e0b; font-family: 'Orbitron';">[ARTIFACT]</span></h5>
+                    <h5>⚔️ 아티팩트 <span style="font-size: 0.75rem; color: #f59e0b; font-family: 'Orbitron';">[ARTIFACT]</span></h5>
                     <p>현대 무기는 통하지 않으므로 <span class="txt-yellow">'마력이 깃든 장비'</span>가 반드시 필요합니다. 단, 마력 충돌 및 신체 붕괴를 방지하기 위해 <span class="txt-red">모든 헌터는 동시에 단 1개의 아티팩트만 착용 가능</span>합니다.</p>
                 </div>
                 <div class="guild-card" style="border-color: #a855f7;">
                     <h5>📊 헌터 등급 <span style="font-size: 0.75rem; color: #a855f7; font-family: 'Orbitron';">[RANK SYSTEM]</span></h5>
                     <p>협회 측정 공식 계급. <span style="color:#a855f7; font-weight:bold;">F~S등급</span>으로 나뉘며 각성 시 평생의 재능이 결정됩니다. 각 등급을 판정하는 절대적인 기준은 <span class="txt-cyan">'혼자서 해당 등급의 일반 게이트를 클리어할 수 있는가'</span>입니다.</p>
                 </div>
+            </div>
+
+            <h3 class="section-title">독도 미스터리 게이트<span class="en-sub-sec">DOKDO GATE</span></h3>
+            <div class="cyber-card" style="border-color: #ff003c; background: rgba(255,0,60,0.05);">
+                <h4 class="txt-red">⚠️ 독도 상공 [코드: 언노운]</h4>
+                <p>100년 전, 최초의 게이트 발생 사태 때 독도 상공에 함께 등장한 초대형 게이트입니다.</p>
+                <p style="margin-top: 10px;">측정 등급은 'F'지만 어떠한 물리적, 마법적 수단으로도 <span class="txt-red">진입 자체가 불가능</span>합니다. 생성 당시 100이었던 표면 위험도 수치는 매년 1씩 정확하게 줄어들어 <strong>현재는 '10'을 가리키고 있습니다.</strong> 전 세계가 연구 중이나 아직 내부에 대해 아무것도 모릅니다.</p>
             </div>
 
             <h3 class="section-title">차원 게이트<span class="en-sub-sec">DIMENSIONAL GATES</span></h3>
@@ -304,7 +311,7 @@
             <h3 class="section-title">사회 및 법률<span class="en-sub-sec">SOCIETY & LAW</span></h3>
             <div class="cyber-card">
                 <h4>🤝 이종족 공존 및 차별 금지법</h4>
-                <p>현재 지구는 인류뿐만 아니라 <span class="txt-cyan">다양한 이종족(엘프, 수인, 마족 등)이 함께 살아가는 다종족 사회</span>입니다. 종족에 대한 부당한 차별 대우나 혐오 발언 적발 시 <span class="txt-red">최대 1개월 이하의 징역(옥살이)</span>에 처해지는 무관용 원칙이 적용됩니다.</p>
+                <p>현재 지구는 인류뿐만 아니라 <span class="txt-cyan">다양한 이종족(엘프, 수인, 마족 등)이 함께 섞여 살아가는 다종족 사회</span>입니다. 종족에 대한 부당한 차별 대우나 혐오 발언 적발 시 <span class="txt-red">최대 1개월 이하의 징역(옥살이)</span>에 처해지는 강력한 무관용 원칙이 적용됩니다.</p>
             </div>
 
             <h3 class="section-title">국가 정세<span class="en-sub-sec">NATION STATUS</span></h3>
@@ -379,10 +386,10 @@
 
             <h3 class="section-title">4대 헌터 길드<span class="en-sub-sec">THE 4 MAJOR GUILDS</span></h3>
             <div class="cyber-card">
-                <div class="guild-card" style="border-color: #ff003c;"><h5>⚔️ 레드 뱅가드 (서울) / <span class="txt-red">물리 딜러</span></h5></div>
-                <div class="guild-card" style="border-color: #a855f7;"><h5>🔮 아스트랄 코어 (대전) / <span style="color:#a855f7;">마법사</span></h5></div>
-                <div class="guild-card" style="border-color: #f59e0b;"><h5>🛡️ 아이언 이지스 (부산) / <span class="txt-yellow">탱커</span></h5></div>
-                <div class="guild-card" style="border-color: #10b981;"><h5>🌿 아발론 생명공학 (제주) / <span style="color:#10b981;">서포터</span></h5></div>
+                <div class="guild-card" style="border-color: #ff003c;"><h5>⚔️ 레드 뱅가드 (서울) / <span class="txt-red">물리 딜러</span></h5><p>전방을 무자비하게 파괴하는 근접 전투 특화 길드.</p></div>
+                <div class="guild-card" style="border-color: #a855f7;"><h5>🔮 아스트랄 코어 (대전) / <span style="color:#a855f7;">마법사</span></h5><p>광역 폭격 및 게이트 마나 구조 해석 연구소.</p></div>
+                <div class="guild-card" style="border-color: #f59e0b;"><h5>🛡️ 아이언 이지스 (부산) / <span class="txt-yellow">탱커</span></h5><p>해안선 괴수들의 진격을 막아내는 철벽의 방패들.</p></div>
+                <div class="guild-card" style="border-color: #10b981;"><h5>🌿 아발론 생명공학 (제주) / <span style="color:#10b981;">서포터</span></h5><p>최상급 힐러 보유 및 특수 회복 포션 제조 독점.</p></div>
             </div>
 
             <h3 class="section-title">범죄 신디케이트<span class="en-sub-sec">CRIMINAL SYNDICATE</span></h3>
@@ -396,8 +403,22 @@
         <!-- 2. 인물 탭 -->
         <div id="tab-chars" class="tab-content">
             <h2>인물 데이터베이스<span class="en-sub">CHARACTER DATA</span></h2>
-            <div class="cyber-card char-card"><div class="char-avatar">👤</div><div class="char-info"><h3>교장</h3><div><span class="char-tag">GAMBLE</span> <span class="char-tag">ALCOHOLIC</span></div><p>최고 권한자. 현재 위치 불명(카지노 추정).</p></div></div>
-            <div class="cyber-card char-card"><div class="char-avatar">🔮</div><div class="char-info"><h3>마법 교수</h3><div><span class="char-tag">DRUNK</span> <span class="char-tag">OVERWORK</span></div><p>대리 실무자. 피로와 알코올 의존증 복합 증세.</p></div></div>
+            <div class="cyber-card char-card">
+                <div class="char-avatar">👤</div>
+                <div class="char-info"><h3>교장</h3><div><span class="char-tag">GAMBLE</span> <span class="char-tag">ALCOHOLIC</span></div><p>최고 권한자. 현재 위치 불명(카지노 추정).</p></div>
+            </div>
+            <div class="cyber-card char-card">
+                <div class="char-avatar">🔮</div>
+                <div class="char-info"><h3>마법 교수</h3><div><span class="char-tag">DRUNK</span> <span class="char-tag">OVERWORK</span></div><p>대리 실무자. 피로와 알코올 의존증 복합 증세.</p></div>
+            </div>
+            <div class="cyber-card char-card">
+                <div class="char-avatar">⚕️</div>
+                <div class="char-info"><h3>보건 선생</h3><div><span class="char-tag">FIRST_AID</span> <span class="char-tag">CYNIC</span></div><p>부상자 극혐오. 치료 중 폭언 발생 확률 99%.</p></div>
+            </div>
+            <div class="cyber-card char-card">
+                <div class="char-avatar">⚖️</div>
+                <div class="char-info"><h3>윤리 교수</h3><div><span class="char-tag">MORAL</span> <span class="char-tag">STRICT</span></div><p>규정 위반 절대 불가. 이종족 화합 강박. 융통성 제로.</p></div>
+            </div>
         </div>
 
         <!-- 3. 지도 탭 -->
@@ -415,6 +436,14 @@
                     <line x1="140" y1="210" x2="210" y2="300" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
                     <line x1="140" y1="210" x2="100" y2="400" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
                     <line x1="135" y1="170" x2="125" y2="200" stroke="rgba(245,158,11,0.3)" stroke-width="1" stroke-dasharray="2,2"/> 
+
+                    <!-- 독도 미스터리 게이트 추가 -->
+                    <g class="map-node" onclick="showMapInfo('dokdo')">
+                        <circle class="pulse-ring" cx="280" cy="150" stroke="#ff003c" />
+                        <circle class="node-circle" cx="280" cy="150" r="4" stroke="#ff003c" />
+                        <text x="270" y="145" class="node-label" text-anchor="end">독도</text>
+                        <text x="270" y="157" class="node-sub" fill="#ff003c" text-anchor="end">[코드:언노운]</text>
+                    </g>
 
                     <g class="map-node" onclick="showMapInfo('academy')">
                         <circle class="pulse-ring" cx="50" cy="110" stroke="#00f3ff" />
@@ -462,6 +491,8 @@
                 <table class="terminal-table">
                     <tr><td>/행동</td><td>물리적 움직임/표정 묘사 입력.</td></tr>
                     <tr><td>/다이스</td><td>1~100 랜덤 난수 생성. 판정용.</td></tr>
+                    <tr><td>/상태창</td><td>대상 개체의 HP/MP/STAT 확인.</td></tr>
+                    <tr><td>/귓속말</td><td>지정 대상에게만 암호화된 메시지 전송.</td></tr>
                 </table>
             </div>
         </div>
@@ -476,7 +507,7 @@
     let isYtReady = false;
     let isUiReady = false;
 
-    // UI 애니메이션용 타이머 (최소 2.5초는 로딩바를 보여줌)
+    // UI 애니메이션용 타이머
     document.addEventListener("DOMContentLoaded", () => {
         const logs = [
             "> BYPASSING SECURITY FIREWALL...",
@@ -520,7 +551,6 @@
     }
 
     // UI 애니메이션과 유튜브 버퍼링이 모두 완료되었을 때만 로딩창 숨기기
-    // (intro-screen은 이미 화면 아래에 깔려 있으므로 깜빡임 발생 X)
     function checkLoadComplete() {
         if (isYtReady && isUiReady) {
             document.getElementById('loading-screen').classList.add('hidden');
@@ -546,10 +576,9 @@
         }
     }
 
-    // 🟢 탭 밖으로 나갔다가 돌아올 시 음악 재생 버그 픽스
+    // 🟢 탭 밖으로 나갔다가 돌아올 시 음악 재생 유지
     document.addEventListener("visibilitychange", () => {
         if (document.visibilityState === "visible") {
-            // 인트로 화면을 통과한 상태고, 음소거가 안 되어있고, 현재 재생 중이 아니라면 강제 재생
             const introHidden = document.getElementById('intro-screen').classList.contains('hidden');
             if (player && typeof player.getPlayerState === 'function') {
                 if (introHidden && !isMuted && player.getPlayerState() !== YT.PlayerState.PLAYING) {
@@ -591,7 +620,9 @@
         document.getElementById(tabId).classList.add('active');
     }
 
+    // 지도 상호작용 데이터 (독도 추가)
     const mapData = {
+        'dokdo': { title: '독도 상공 [코드: 언노운]', desc: '100년 전 최초 발생한 이래 아무도 진입하지 못한 미스터리 게이트. 위험도 수치는 100년 전 100에서 매년 1씩 줄어 현재 10을 가리키고 있습니다.', color: '#ff003c' },
         'academy': { title: '인천 (해상) [시엘 아카데미]', desc: '해상 인공섬. 강력한 보호막으로 둘러싸여 있습니다.', color: '#00f3ff' },
         'seoul': { title: '서울 [레드 뱅가드]', desc: '북부 방어선을 뚫어버리는 물리 딜러 특화 길드.', color: '#ff003c' },
         'sejong': { title: '세종 [헌터 협회 본부]', desc: '인공 게이트로 전국 길드에 요원을 파견하는 관리 기관.', color: '#ffffff' },
