@@ -2,10 +2,8 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <!-- 모바일 최적화 뷰포트 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>CIEL_ACADEMY_SYS_OS</title>
-    <!-- 사이버틱한 영문 폰트 (Orbitron) 및 본문 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Pretendard:wght@300;500;700&display=swap" rel="stylesheet">
     
     <style>
@@ -13,186 +11,143 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { 
             font-family: 'Pretendard', sans-serif; 
-            background-color: #05050a; /* 딥 블랙 */
+            background-color: #05050a; 
             color: #d1d5db; 
             line-height: 1.5;
-            /* 사이버 홀로그램 그리드 배경 */
             background-image: 
                 linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
             background-size: 20px 20px;
+            overflow: hidden; /* 인트로 전에는 스크롤 방지 */
         }
         
-        /* 모바일 앱 화면처럼 중앙 정렬 및 최대 너비 제한 (PC에서 봐도 폰처럼 보임) */
         .app-container {
-            max-width: 480px;
-            margin: 0 auto;
-            background-color: rgba(5, 5, 10, 0.85);
-            min-height: 100vh;
-            border-left: 1px solid rgba(0, 243, 255, 0.2);
-            border-right: 1px solid rgba(0, 243, 255, 0.2);
-            box-shadow: 0 0 20px rgba(0, 243, 255, 0.05);
-            position: relative;
-            overflow-x: hidden;
+            max-width: 480px; margin: 0 auto;
+            background-color: rgba(5, 5, 10, 0.85); min-height: 100vh;
+            border-left: 1px solid rgba(0, 243, 255, 0.2); border-right: 1px solid rgba(0, 243, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.05); position: relative;
         }
 
-        /* 헤더 디자인 (네온 글리치 느낌) */
+        /* ==========================================
+           인트로 화면 (진입 스크린)
+           ========================================== */
+        #intro-screen {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: #05050a; z-index: 9999;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        #intro-screen.hidden { opacity: 0; visibility: hidden; }
+        
+        .intro-title {
+            font-family: 'Orbitron', sans-serif; font-size: 2.8rem; color: #fff;
+            text-shadow: 0 0 10px #00f3ff, 0 0 20px #00f3ff, 0 0 40px #00f3ff;
+            text-align: center; line-height: 1.1; margin-bottom: 40px; animation: glitch 2s infinite;
+        }
+        .intro-title span { display: block; font-size: 1rem; color: #00f3ff; text-shadow: none; letter-spacing: 5px; margin-top: 10px; }
+        
+        .enter-btn {
+            background: transparent; border: 2px solid #00f3ff; color: #00f3ff;
+            padding: 15px 40px; font-size: 1.2rem; font-family: 'Pretendard', sans-serif; font-weight: bold;
+            cursor: pointer; position: relative; overflow: hidden; transition: all 0.3s;
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
+        }
+        .enter-btn::before {
+            content: "ENTER / 들어가기"; position: relative; z-index: 2; letter-spacing: 2px;
+        }
+        .enter-btn:hover { background: rgba(0, 243, 255, 0.2); box-shadow: 0 0 20px rgba(0, 243, 255, 0.6); }
+        .enter-btn:active { transform: scale(0.95); }
+
+        /* ==========================================
+           메인 앱 스타일
+           ========================================== */
         header { 
-            padding: 30px 20px 20px; 
-            text-align: center; 
-            border-bottom: 1px solid #00f3ff;
-            background: linear-gradient(180deg, rgba(0,243,255,0.1) 0%, transparent 100%);
-            position: relative;
+            padding: 30px 20px 20px; text-align: center; border-bottom: 1px solid #00f3ff;
+            background: linear-gradient(180deg, rgba(0,243,255,0.1) 0%, transparent 100%); position: relative;
         }
         header::before {
-            content: "SYS.INIT.OK";
-            position: absolute;
-            top: 10px; left: 10px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.6rem;
-            color: #00f3ff;
+            content: "SYS.INIT.OK"; position: absolute; top: 10px; left: 10px;
+            font-family: 'Orbitron', sans-serif; font-size: 0.6rem; color: #00f3ff;
         }
-        h1 { 
-            font-family: 'Orbitron', sans-serif;
-            color: #fff; 
-            font-size: 2rem; 
-            font-weight: 900;
-            text-shadow: 0 0 10px #00f3ff, 0 0 20px #00f3ff;
-            letter-spacing: 2px;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-        }
-        header p { color: #00f3ff; font-size: 0.8rem; letter-spacing: 1px; }
-
-        /* 탭 메뉴 디자인 (상단 고정, 스와이프 가능) */
-        .tab-menu { 
-            display: flex; 
-            position: sticky; 
-            top: 0; 
-            z-index: 100;
-            background: rgba(5, 5, 10, 0.95);
-            backdrop-filter: blur(5px);
-            border-bottom: 1px solid rgba(0, 243, 255, 0.3);
-            overflow-x: auto;
-        }
-        .tab-menu::-webkit-scrollbar { display: none; } /* 모바일에서 스크롤바 숨김 */
         
+        h2 { 
+            color: #fff; text-shadow: 0 0 5px #ff003c; border-left: 3px solid #ff003c; 
+            padding-left: 10px; margin-bottom: 25px; font-size: 1.5rem; font-weight: 700;
+        }
+        .en-sub { 
+            display: block; font-family: 'Orbitron', sans-serif; font-size: 0.7rem; 
+            color: #00f3ff; text-shadow: 0 0 3px #00f3ff; letter-spacing: 2px; margin-top: 2px; text-transform: uppercase;
+        }
+
+        h3.section-title { color: #00f3ff; margin: 25px 0 10px; font-size: 1.1rem; border-bottom: 1px dashed #00f3ff; padding-bottom: 5px; }
+        .en-sub-sec { font-family: 'Orbitron', sans-serif; font-size: 0.6rem; margin-left: 5px; color: rgba(0,243,255,0.6); }
+
+        .tab-menu { 
+            display: flex; position: sticky; top: 0; z-index: 100; background: rgba(5, 5, 10, 0.95);
+            backdrop-filter: blur(5px); border-bottom: 1px solid rgba(0, 243, 255, 0.3);
+        }
         .tab-button { 
-            flex: 1; 
-            min-width: 80px; /* 버튼 최소 너비 */
-            padding: 15px 0; 
-            border: none; 
-            background: none; 
-            font-size: 0.9rem; 
-            font-weight: bold; 
-            color: #4b5563; 
-            cursor: pointer; 
-            transition: all 0.2s;
-            font-family: 'Orbitron', sans-serif;
+            flex: 1; min-width: 80px; padding: 15px 0; border: none; background: none; 
+            font-size: 0.9rem; font-weight: bold; color: #4b5563; cursor: pointer; transition: all 0.2s; font-family: 'Pretendard', sans-serif;
         }
         .tab-button.active { 
-            color: #00f3ff; 
-            text-shadow: 0 0 8px #00f3ff;
-            border-bottom: 2px solid #00f3ff; 
+            color: #00f3ff; text-shadow: 0 0 8px #00f3ff; border-bottom: 2px solid #00f3ff; 
             background: linear-gradient(0deg, rgba(0,243,255,0.1) 0%, transparent 100%);
         }
 
-        /* 탭 컨텐츠 영역 */
-        .content-area { padding: 20px; }
+        .content-area { padding: 20px; height: calc(100vh - 150px); overflow-y: auto; }
+        .content-area::-webkit-scrollbar { width: 4px; }
+        .content-area::-webkit-scrollbar-thumb { background: #00f3ff; border-radius: 4px; }
+        
         .tab-content { display: none; animation: glitchFade 0.3s ease-out; }
         .tab-content.active { display: block; }
-
         @keyframes glitchFade { 
             0% { opacity: 0; transform: translateY(5px); filter: hue-rotate(90deg); } 
             100% { opacity: 1; transform: translateY(0); filter: hue-rotate(0deg); } 
         }
 
-        /* 공통 타이틀 */
-        h2 { 
-            font-family: 'Orbitron', sans-serif;
-            color: #fff; 
-            text-shadow: 0 0 5px #ff003c; /* 마젠타 네온 */
-            border-left: 3px solid #ff003c; 
-            padding-left: 10px; 
-            margin-bottom: 20px; 
-            font-size: 1.4rem; 
-            text-transform: uppercase;
-        }
-        h3.section-title { color: #00f3ff; margin: 25px 0 10px; font-size: 1.1rem; border-bottom: 1px dashed #00f3ff; padding-bottom: 5px; }
-
-        /* 사이버틱 카드 공통 디자인 (각진 모서리 clip-path) */
         .cyber-card { 
-            background: rgba(16, 24, 39, 0.7); 
-            padding: 15px; 
-            margin-bottom: 15px;
+            background: rgba(16, 24, 39, 0.7); padding: 15px; margin-bottom: 15px;
             border: 1px solid rgba(0, 243, 255, 0.3); 
-            /* 오른쪽 위, 왼쪽 아래가 잘린 사이버펑크 특유의 모양 */
             clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
             position: relative;
         }
-        /* 카드 장식용 네온 포인트 */
-        .cyber-card::before {
-            content: ""; position: absolute; top: 0; left: 0; width: 20px; height: 2px; background: #00f3ff;
-        }
-        
+        .cyber-card::before { content: ""; position: absolute; top: 0; left: 0; width: 20px; height: 2px; background: #00f3ff; }
         .cyber-card h4 { color: #fff; font-size: 1.1rem; margin-bottom: 5px; text-shadow: 0 0 3px rgba(255,255,255,0.5); }
-        .cyber-card p { font-size: 0.9rem; color: #9ca3af; }
+        .cyber-card p { font-size: 0.9rem; color: #9ca3af; line-height: 1.6; }
 
-        /* 게이트 리스트 (위험도 표시) */
-        .gate-list { list-style: none; }
-        .gate-list li { margin-bottom: 15px; }
-        .gate-list .gate-blue { border-color: #00f3ff; }
-        .gate-list .gate-blue h4 { color: #00f3ff; text-shadow: 0 0 5px #00f3ff; }
-        .gate-list .gate-red { border-color: #ff003c; background: rgba(255, 0, 60, 0.05); }
-        .gate-list .gate-red h4 { color: #ff003c; text-shadow: 0 0 5px #ff003c; }
-        .gate-list .gate-black { border-color: #f59e0b; background: rgba(245, 158, 11, 0.05); }
-        .gate-list .gate-black h4 { color: #f59e0b; text-shadow: 0 0 5px #f59e0b; }
+        .txt-red { color: #ff003c; text-shadow: 0 0 5px rgba(255,0,60,0.5); }
+        .txt-cyan { color: #00f3ff; text-shadow: 0 0 5px rgba(0,243,255,0.5); }
+        .txt-yellow { color: #f59e0b; text-shadow: 0 0 5px rgba(245,158,11,0.5); }
+        
+        .guild-card { border-left: 3px solid; padding-left: 10px; margin-bottom: 15px; }
+        .guild-card h5 { font-size: 1rem; color: #fff; margin-bottom: 2px; }
+        .guild-card p { font-size: 0.85rem; color: #9ca3af; }
 
-        /* 인물 탭 디자인 (핸드폰에선 1열, 아바타+설명 가로 배치) */
         .char-card { display: flex; gap: 15px; align-items: center; }
         .char-avatar { 
-            width: 60px; height: 60px; flex-shrink: 0;
-            background: #000; border: 1px solid #00f3ff; 
-            box-shadow: inset 0 0 10px rgba(0, 243, 255, 0.3);
-            display: flex; align-items: center; justify-content: center; 
-            font-size: 1.5rem; 
-            clip-path: polygon(25% 0%, 75% 0%, 100% 25%, 100% 75%, 75% 100%, 25% 100%, 0% 75%, 0% 25%); /* 8각형 */
+            width: 60px; height: 60px; flex-shrink: 0; background: #000; border: 1px solid #00f3ff; 
+            box-shadow: inset 0 0 10px rgba(0, 243, 255, 0.3); display: flex; align-items: center; justify-content: center; 
+            font-size: 1.5rem; clip-path: polygon(25% 0%, 75% 0%, 100% 25%, 100% 75%, 75% 100%, 25% 100%, 0% 75%, 0% 25%);
         }
         .char-info { flex: 1; }
         .char-info h3 { font-size: 1.1rem; color: #fff; margin-bottom: 3px; }
-        .char-tag { 
-            display: inline-block; background: transparent; border: 1px solid #00f3ff; 
-            color: #00f3ff; padding: 2px 6px; font-size: 0.7rem; 
-            margin: 2px 2px 5px 0; text-transform: uppercase;
-        }
+        .char-tag { display: inline-block; background: transparent; border: 1px solid #00f3ff; color: #00f3ff; padding: 2px 6px; font-size: 0.7rem; margin: 2px 2px 5px 0; text-transform: uppercase; }
 
-        /* 지도 탭 (HUD 레이더 리스트 느낌) */
-        .map-hud-container {
-            border: 1px solid #00f3ff;
-            padding: 15px;
-            background: repeating-linear-gradient(0deg, rgba(0,243,255,0.05) 0px, rgba(0,243,255,0.05) 1px, transparent 1px, transparent 20px);
-            position: relative;
+        .hologram-map-container {
+            width: 100%; height: 450px; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(0, 243, 255, 0.3);
+            border-radius: 8px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;
         }
-        .map-hud-container::after {
-            content: "SCANNING..."; position: absolute; top: -10px; right: 10px; 
-            background: #05050a; color: #ff003c; font-size: 0.7rem; font-family: 'Orbitron'; padding: 0 5px;
-            animation: blink 1s infinite;
-        }
-        @keyframes blink { 50% { opacity: 0; } }
-
-        .location-node { margin-bottom: 15px; border-left: 2px solid #fff; padding-left: 10px; }
-        .loc-seoul { border-color: #ff003c; } /* 딜러 */
-        .loc-daejeon { border-color: #a855f7; } /* 법사 */
-        .loc-busan { border-color: #f59e0b; } /* 탱커 */
-        .loc-jeju { border-color: #10b981; } /* 서폿 */
+        .map-svg { width: 100%; height: 100%; filter: drop-shadow(0 0 5px rgba(0,243,255,0.6)); }
+        .map-outline { fill: rgba(0, 243, 255, 0.05); stroke: #00f3ff; stroke-width: 1; stroke-dasharray: 4,4; }
+        .node-circle { fill: #000; stroke-width: 2; }
+        .node-label { font-family: 'Orbitron', sans-serif; font-size: 12px; fill: #fff; font-weight: bold; pointer-events: none; }
+        .node-sub { font-size: 8px; font-family: 'Orbitron'; fill: rgba(255,255,255,0.7); }
+        @keyframes pulse { 0% { r: 4; opacity: 1; } 100% { r: 15; opacity: 0; } }
+        .pulse-ring { fill: none; stroke-width: 1; animation: pulse 2s infinite; }
         
-        .location-node h4 { font-family: 'Orbitron', sans-serif; font-size: 1rem; margin-bottom: 2px; }
-        .role-code { font-size: 0.7rem; background: rgba(255,255,255,0.1); padding: 1px 4px; margin-left: 5px; }
-
-        /* 명령어 탭 (터미널 콘솔 느낌) */
         .terminal-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-        .terminal-table tr { border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .terminal-table td { padding: 10px 5px; vertical-align: top; }
+        .terminal-table td { padding: 10px 5px; border-bottom: 1px solid rgba(255,255,255,0.1); }
         .terminal-table td:first-child { color: #ff003c; font-family: 'Orbitron', monospace; width: 35%; }
     </style>
 </head>
@@ -200,141 +155,189 @@
 
 <div class="app-container">
     
-    <header>
-        <h1>CIEL ACADEMY</h1>
-        <p>DB_VER: NEO-HUNTER_OS v1.0</p>
-    </header>
+    <!-- 인트로 화면 -->
+    <div id="intro-screen">
+        <div class="intro-title">
+            CIEL ACADEMY<br>OS
+            <span>SYSTEM INITIALIZATION...</span>
+        </div>
+        <button class="enter-btn" onclick="enterSite()"></button>
+    </div>
 
+    <!-- 탭 메뉴 -->
     <div class="tab-menu">
-        <button class="tab-button active" onclick="openTab('tab-world')">WORLD</button>
-        <button class="tab-button" onclick="openTab('tab-chars')">DATA</button>
-        <button class="tab-button" onclick="openTab('tab-map')">RADAR</button>
-        <button class="tab-button" onclick="openTab('tab-cmds')">CMD</button>
+        <button class="tab-button active" onclick="openTab('tab-world')">세계관</button>
+        <button class="tab-button" onclick="openTab('tab-chars')">인물</button>
+        <button class="tab-button" onclick="openTab('tab-map')">지도</button>
+        <button class="tab-button" onclick="openTab('tab-cmds')">명령어</button>
     </div>
 
     <div class="content-area">
         
         <!-- 1. 세계관 탭 -->
         <div id="tab-world" class="tab-content active">
-            <h2>SYS.OVERVIEW</h2>
+            <h2>세계관 및 세력 구도<span class="en-sub">WORLD & FACTIONS</span></h2>
             
-            <h3 class="section-title">FACTIONS (주요 세력)</h3>
+            <!-- 신입을 위한 용어 안내 (추가된 부분) -->
+            <h3 class="section-title">기초 용어 안내<span class="en-sub-sec">BASIC TERMINOLOGY</span></h3>
             <div class="cyber-card">
-                <h4>[CIEL ACADEMY] 시엘 아카데미</h4>
-                <p>차세대 헌터 양성 교육 기관. 이종족과 인간 혼성 편성. 치명적 결함을 가진 특수 교수진 다수 배정됨.</p>
-            </div>
-            <div class="cyber-card">
-                <h4>[ASSOCIATION] 헌터 협회</h4>
-                <p>글로벌 게이트 통제국. 헌터 라이센스 발급 및 등급(S~F) 산정. 아카데미와 길드에 대한 견제 권한 소유.</p>
+                <p style="margin-bottom: 15px; font-size: 0.8rem; color: #9ca3af;">※ 헌터 세계관에 처음 진입하는 신입생을 위한 필수 지식입니다.</p>
+                
+                <div class="guild-card" style="border-color: #00f3ff;">
+                    <h5>🔵 마력과 각성 <span style="font-size: 0.75rem; color: #00f3ff; font-family: 'Orbitron';">[MANA & AWAKEN]</span></h5>
+                    <p>어느 날 평범한 인간이 체내에 미지의 에너지원인 <span class="txt-cyan">'마력(Mana)'</span>을 다룰 수 있게 되는 돌연변이 현상을 '각성'이라고 부릅니다. 마력은 신체 능력을 초인적으로 끌어올리거나 마법을 구사하게 해주는 헌터들의 필수 자원입니다.</p>
+                </div>
+                
+                <div class="guild-card" style="border-color: #f59e0b;">
+                    <h5>💎 아티팩트 <span style="font-size: 0.75rem; color: #f59e0b; font-family: 'Orbitron';">[ARTIFACT]</span></h5>
+                    <p>현대의 총기류는 게이트 몬스터에게 흠집조차 내지 못합니다. 몬스터를 죽이려면 게이트 내부에서 얻거나 몬스터의 뼈나 코어로 제작된 <span class="txt-yellow">'마력이 깃든 장비(아티팩트)'</span>가 반드시 필요합니다.</p>
+                </div>
+
+                <div class="guild-card" style="border-color: #a855f7;">
+                    <h5>📊 헌터 등급 <span style="font-size: 0.75rem; color: #a855f7; font-family: 'Orbitron';">[RANK SYSTEM]</span></h5>
+                    <p>협회에서 측정하는 헌터의 공식 계급. 약한 순서대로 <span style="color:#a855f7; font-weight:bold;">F, E, D, C, B, A, S등급</span>으로 나뉩니다. 한 번 각성할 때 정해진 등급과 마력량은 희박한 확률을 제외하고는 평생 변하지 않는 '재능 절대주의' 시스템입니다.</p>
+                </div>
             </div>
 
-            <h3 class="section-title">DIMENSIONAL GATES</h3>
-            <ul class="gate-list">
-                <li class="cyber-card gate-blue">
-                    <h4>TYPE: NORMAL_GATE</h4>
-                    <p>푸른빛의 시공간 균열. 외부 통신 연결(ON). 표준 파티 프로토콜로 클리어 가능.</p>
-                </li>
-                <li class="cyber-card gate-red">
-                    <h4>TYPE: RED_GATE</h4>
-                    <p>핏빛 차단장. 진입 시 외부 통신 두절(OFF). 보스 개체 소멸 전까지 이탈 불가. 사망률 극대화.</p>
-                </li>
-                <li class="cyber-card gate-black">
-                    <h4>CRITICAL: GATE_BREAK</h4>
-                    <p>발생 후 168시간(7일) 미공략 시 균열 붕괴. 내부 몬스터 현실 칩입 현상. 즉각적인 요격 필수.</p>
-                </li>
-            </ul>
+            <h3 class="section-title">국가 정세<span class="en-sub-sec">NATION STATUS</span></h3>
+            <div class="cyber-card">
+                <h4>[KR] 대한민국 : 최대 헌터 국가</h4>
+                <p>전 세계에서 게이트 발생 빈도가 가장 높은 가혹한 환경. 그러나 그로 인해 <span class="txt-cyan">최상위 랭크 헌터들을 가장 많이 배출한 무력 강국</span>이 되었습니다. 힘의 균형을 위해 전 세계의 헌터 유학생들이 한국으로 몰려듭니다.</p>
+            </div>
+            
+            <h3 class="section-title">본부 및 거점<span class="en-sub-sec">HQ LOCATIONS</span></h3>
+            <div class="cyber-card">
+                <h4>🏫 시엘 아카데미 본교</h4>
+                <p><strong>위치:</strong> 인천 앞바다에 건설된 <span class="txt-cyan">'비밀 해상 인공섬'</span><br>
+                민간인의 출입이 철저히 통제되며, 거대한 돔 형태의 보호막이 섬 전체를 감싸고 있습니다. 교수진의 통제불능 사태나 훈련 중 발생할 수 있는 대규모 폭발을 외부로부터 격리하기 위한 조치입니다.</p>
+            </div>
+
+            <h3 class="section-title">4대 헌터 길드<span class="en-sub-sec">THE 4 MAJOR GUILDS</span></h3>
+            <div class="cyber-card">
+                <p style="margin-bottom: 10px;">대한민국의 동서남북 게이트 방어선을 책임지는 4개의 거대 길드입니다.</p>
+                <div class="guild-card" style="border-color: #ff003c;">
+                    <h5>⚔️ 레드 뱅가드 (서울) / <span class="txt-red">물리 딜러</span></h5>
+                    <p>전방을 파괴하며 돌파하는 근접 전투 및 무기 마스터리 특화 길드.</p>
+                </div>
+                <div class="guild-card" style="border-color: #a855f7;">
+                    <h5>🔮 아스트랄 코어 (대전) / <span style="color:#a855f7;">마법사</span></h5>
+                    <p>압도적인 광역 폭격과 차원 게이트 마나 해석을 담당하는 연구/전투 길드.</p>
+                </div>
+                <div class="guild-card" style="border-color: #f59e0b;">
+                    <h5>🛡️ 아이언 이지스 (부산) / <span class="txt-yellow">탱커</span></h5>
+                    <p>바다에서 올라오는 거대 괴수들의 진격을 육탄전으로 막아내는 철벽의 방패.</p>
+                </div>
+                <div class="guild-card" style="border-color: #10b981;">
+                    <h5>🌿 아발론 생명공학 (제주) / <span style="color:#10b981;">서포터</span></h5>
+                    <p>최상급 힐러와 버퍼들을 보유. 특수 포션 제조를 독점하여 막대한 부를 쌓았습니다.</p>
+                </div>
+            </div>
+
+            <h3 class="section-title">범죄 신디케이트<span class="en-sub-sec">CRIMINAL SYNDICATE</span></h3>
+            <div class="cyber-card" style="border-color: #ff003c; background: rgba(255,0,60,0.05);">
+                <h4 class="txt-red">⚠️ 사냥개 (THE HOUNDS)</h4>
+                <p><strong>거점:</strong> 고정된 본대 없음 (버려진 폐역이나 지하수로를 주기적으로 이동)</p>
+                <p style="margin-top: 5px;">게이트 내부의 통신 단절을 악용하여 <span class="txt-red">'동료 헌터'만을 전문적으로 사냥(PK)하는 어둠의 조직</span>입니다. 이들은 주로 <strong>뒷골목 용병, 고액의 청부 살인 의뢰, 불법 아티팩트 및 몬스터 부산물 밀매상</strong>으로 활동하며 협회의 1급 수배를 받고 있습니다.</p>
+            </div>
         </div>
 
         <!-- 2. 인물 탭 -->
         <div id="tab-chars" class="tab-content">
-            <h2>FACULTY.DATA</h2>
+            <h2>인물 데이터베이스<span class="en-sub">CHARACTER DATA</span></h2>
             
+            <h3 class="section-title">아카데미 교수진<span class="en-sub-sec">FACULTY MEMBERS</span></h3>
             <div class="cyber-card char-card">
                 <div class="char-avatar">👤</div>
                 <div class="char-info">
-                    <h3>PRINCIPAL (교장)</h3>
+                    <h3>교장 <span style="font-size:0.7em; color:#666; font-family:'Orbitron';">(PRINCIPAL)</span></h3>
                     <div><span class="char-tag">GAMBLE</span> <span class="char-tag">ALCOHOLIC</span></div>
-                    <p>최고 권한자. 현재 위치 불명 (추정: 카지노). 직무 유기 상태.</p>
+                    <p>최고 권한자. 현재 위치 불명(카지노 추정). 직무 유기 상태.</p>
                 </div>
             </div>
-
             <div class="cyber-card char-card">
                 <div class="char-avatar">🔮</div>
                 <div class="char-info">
-                    <h3>MAGIC_PROF (마법 교수)</h3>
+                    <h3>마법 교수 <span style="font-size:0.7em; color:#666; font-family:'Orbitron';">(MAGIC PROF)</span></h3>
                     <div><span class="char-tag">DRUNK</span> <span class="char-tag">OVERWORK</span></div>
-                    <p>대리 실무자. 만성 피로와 알코올 의존증 복합 증세. 서류 처리 담당.</p>
+                    <p>대리 실무자. 만성 피로와 알코올 의존증 복합 증세.</p>
                 </div>
             </div>
-
             <div class="cyber-card char-card">
                 <div class="char-avatar">⚕️</div>
                 <div class="char-info">
-                    <h3>MEDIC_STAFF (보건 선생)</h3>
+                    <h3>보건 선생 <span style="font-size:0.7em; color:#666; font-family:'Orbitron';">(MEDIC STAFF)</span></h3>
                     <div><span class="char-tag">FIRST_AID</span> <span class="char-tag">CYNIC</span></div>
-                    <p>부상자 극혐오. 치료 중 폭언 발생 확률 99%. 완벽한 응급 처치율.</p>
+                    <p>부상자 극혐오. 치료 중 폭언 발생 확률 99%.</p>
                 </div>
             </div>
-
             <div class="cyber-card char-card">
                 <div class="char-avatar">⚖️</div>
                 <div class="char-info">
-                    <h3>ETHICS_PROF (윤리 교수)</h3>
+                    <h3>윤리 교수 <span style="font-size:0.7em; color:#666; font-family:'Orbitron';">(ETHICS PROF)</span></h3>
                     <div><span class="char-tag">MORAL</span> <span class="char-tag">STRICT</span></div>
-                    <p>규정 위반 절대 불가. 이종족 화합 강박. 융통성 수치 0%.</p>
+                    <p>규정 위반 절대 불가. 이종족 화합 강박. 융통성 제로.</p>
                 </div>
             </div>
         </div>
 
         <!-- 3. 지도 탭 -->
         <div id="tab-map" class="tab-content">
-            <h2>LOC.RADAR</h2>
-            <p style="font-size: 0.8rem; color: #9ca3af; margin-bottom: 15px;">KOREA_TERRITORY_GUILD_NODES_ACTIVATED</p>
+            <h2>레이더 스캔<span class="en-sub">LOCATION RADAR</span></h2>
             
-            <div class="map-hud-container">
-                <div class="location-node loc-seoul">
-                    <h4>SEOUL_HQ <span style="color:#ff003c;">[블러드 하운드]</span><span class="role-code">PHYSICAL_DPS</span></h4>
-                    <p style="font-size: 0.8rem; color: #ccc;">전방 파괴 및 근접 타격 특화 길드. 압도적 무력 보유.</p>
-                </div>
+            <div class="hologram-map-container">
+                <svg class="map-svg" viewBox="0 0 300 450" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 한반도 윤곽선 -->
+                    <polygon class="map-outline" points="110,60 160,50 190,110 210,180 250,250 260,330 220,380 180,390 140,360 90,340 70,250 80,180 90,120 70,80" />
+                    
+                    <line x1="120" y1="140" x2="140" y2="230" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                    <line x1="140" y1="230" x2="220" y2="330" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                    <line x1="140" y1="230" x2="100" y2="400" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
 
-                <div class="location-node loc-daejeon">
-                    <h4>DAEJEON_BR <span style="color:#a855f7;">[아케인 서클]</span><span class="role-code">MAGE</span></h4>
-                    <p style="font-size: 0.8rem; color: #ccc;">광역 마력 포격 및 후방 요격 진지. 마법 학술 연구 병행.</p>
-                </div>
+                    <!-- 서울 (레드 뱅가드) -->
+                    <circle class="pulse-ring" cx="120" cy="140" stroke="#ff003c" />
+                    <circle class="node-circle" cx="120" cy="140" r="5" stroke="#ff003c" />
+                    <text x="135" y="135" class="node-label">SEOUL</text>
+                    <text x="135" y="147" class="node-sub" fill="#ff003c">[RED_VANGUARD]</text>
 
-                <div class="location-node loc-busan">
-                    <h4>BUSAN_BR <span style="color:#f59e0b;">[아이언 월]</span><span class="role-code">TANKER</span></h4>
-                    <p style="font-size: 0.8rem; color: #ccc;">해안선 대형 몬스터 방어선 구축. 최강의 물리/마법 방패.</p>
-                </div>
+                    <!-- 대전 (아스트랄 코어) -->
+                    <circle class="pulse-ring" cx="140" cy="230" stroke="#a855f7" />
+                    <circle class="node-circle" cx="140" cy="230" r="4" stroke="#a855f7" />
+                    <text x="155" y="225" class="node-label">DAEJEON</text>
+                    <text x="155" y="237" class="node-sub" fill="#a855f7">[ASTRAL_CORE]</text>
 
-                <div class="location-node loc-jeju">
-                    <h4>JEJU_HQ <span style="color:#10b981;">[에덴 생명공학]</span><span class="role-code">SUPPORT</span></h4>
-                    <p style="font-size: 0.8rem; color: #ccc;">포션 정제 및 버프/힐링 특화. 후방 물자 지원 핵심 거점.</p>
-                </div>
+                    <!-- 부산 (아이언 이지스) -->
+                    <circle class="pulse-ring" cx="220" cy="330" stroke="#f59e0b" />
+                    <circle class="node-circle" cx="220" cy="330" r="5" stroke="#f59e0b" />
+                    <text x="235" y="325" class="node-label">BUSAN</text>
+                    <text x="235" y="337" class="node-sub" fill="#f59e0b">[IRON_AEGIS]</text>
+
+                    <!-- 제주 (아발론 생명공학) -->
+                    <circle class="pulse-ring" cx="100" cy="400" stroke="#10b981" />
+                    <circle class="node-circle" cx="100" cy="400" r="4" stroke="#10b981" />
+                    <text x="115" y="395" class="node-label">JEJU</text>
+                    <text x="115" y="407" class="node-sub" fill="#10b981">[AVALON_BIO]</text>
+                </svg>
             </div>
+            <p style="font-size: 0.8rem; color: #9ca3af; margin-top: 15px; text-align: center;">위성 스캔 완료. 4대 길드 생체 신호가 포착되었습니다.</p>
         </div>
 
         <!-- 4. 명령어 탭 -->
         <div id="tab-cmds" class="tab-content">
-            <h2>SYS.CMD</h2>
+            <h2>시스템 명령어<span class="en-sub">SYSTEM COMMANDS</span></h2>
             
             <div class="cyber-card">
                 <table class="terminal-table">
                     <tr>
-                        <td>/행동<br><span style="font-size:0.7rem;color:#666;">[ACTION]</span></td>
-                        <td>물리적 움직임/표정 묘사 입력.<br><span style="color:#00f3ff;">ex) /행동 검을 뽑는다</span></td>
+                        <td>/행동<br><span style="font-size:0.6rem;color:#666;">[ACTION]</span></td>
+                        <td>물리적 움직임/표정 묘사 입력.</td>
                     </tr>
                     <tr>
-                        <td>/다이스<br><span style="font-size:0.7rem;color:#666;">[ROLL]</span></td>
-                        <td>1~100 랜덤 난수 생성. 행동 판정용.<br><span style="color:#00f3ff;">ex) /다이스</span></td>
+                        <td>/다이스<br><span style="font-size:0.6rem;color:#666;">[ROLL]</span></td>
+                        <td>1~100 랜덤 난수 생성. 판정용.</td>
                     </tr>
                     <tr>
-                        <td>/상태창<br><span style="font-size:0.7rem;color:#666;">[STATUS]</span></td>
-                        <td>대상 개체의 HP/MP/STAT 데이터 출력.<br><span style="color:#00f3ff;">ex) /상태창 본인</span></td>
-                    </tr>
-                    <tr>
-                        <td>/귓속말<br><span style="font-size:0.7rem;color:#666;">[WHISPER]</span></td>
-                        <td>지정 대상에게만 암호화된 메시지 전송.<br><span style="color:#00f3ff;">ex) /귓속말 [대상] [내용]</span></td>
+                        <td>/상태창<br><span style="font-size:0.6rem;color:#666;">[STATUS]</span></td>
+                        <td>대상 개체의 HP/MP/STAT 확인.</td>
                     </tr>
                 </table>
             </div>
@@ -343,8 +346,13 @@
     </div>
 </div>
 
-<!-- 탭 전환용 자바스크립트 -->
 <script>
+    function enterSite() {
+        const intro = document.getElementById('intro-screen');
+        intro.classList.add('hidden');
+        document.body.style.overflow = 'auto'; 
+    }
+
     function openTab(tabId) {
         const buttons = document.querySelectorAll('.tab-button');
         const contents = document.querySelectorAll('.tab-content');
@@ -354,12 +362,6 @@
         
         event.target.classList.add('active');
         document.getElementById(tabId).classList.add('active');
-        
-        // 탭 전환 시 사이버틱한 클릭 효과음(시각적)을 위해 화면 살짝 흔들기
-        const appContainer = document.querySelector('.app-container');
-        appContainer.style.transform = "translateX(2px)";
-        setTimeout(() => appContainer.style.transform = "translateX(-2px)", 50);
-        setTimeout(() => appContainer.style.transform = "translateX(0)", 100);
     }
 </script>
 
