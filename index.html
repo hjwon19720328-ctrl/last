@@ -30,25 +30,7 @@
             background-color: rgba(5, 5, 10, 0.85); min-height: 100vh;
             border-left: 1px solid rgba(0, 243, 255, 0.2); border-right: 1px solid rgba(0, 243, 255, 0.2);
             box-shadow: 0 0 20px rgba(0, 243, 255, 0.05); position: relative;
-            transition: box-shadow 1s ease, border-color 1s ease;
         }
-
-        /* 🎵 웅장해지는 모드 (2:09 ~ 2:39) */
-        body.grand-mode {
-            background-color: #1a0005;
-            background-image: 
-                radial-gradient(circle at center, rgba(255, 0, 60, 0.15) 0%, transparent 80%),
-                linear-gradient(rgba(255, 215, 0, 0.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 215, 0, 0.04) 1px, transparent 1px);
-        }
-        body.grand-mode .app-container {
-            box-shadow: 0 0 50px rgba(255, 0, 60, 0.5), inset 0 0 30px rgba(255, 215, 0, 0.1);
-            border-color: rgba(255, 0, 60, 0.6);
-            animation: grandPulse 2s infinite ease-in-out;
-        }
-        body.grand-mode h2 { text-shadow: 0 0 15px #ff003c, 0 0 30px #ffd700; border-left-color: #ffd700; }
-        body.grand-mode .tab-button.active { color: #ffd700; text-shadow: 0 0 10px #ffd700; border-bottom-color: #ffd700; }
-        @keyframes grandPulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
 
         /* 로딩 화면 */
         #loading-screen {
@@ -86,17 +68,17 @@
         .enter-btn:hover { background: rgba(0, 243, 255, 0.2); box-shadow: 0 0 20px rgba(0, 243, 255, 0.6); }
 
         /* 상단 바 */
-        .top-bar { display: flex; justify-content: flex-end; align-items: center; padding: 8px 15px; background: rgba(5,5,10,0.95); border-bottom: 1px solid rgba(0,243,255,0.3); position: relative; z-index: 200; }
-        .bgm-credit { color: #00f3ff; text-decoration: none; font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: bold; margin-right: 15px; transition: text-shadow 0.2s; }
+        .top-bar { display: flex; justify-content: flex-end; align-items: center; padding: 8px 15px; background: rgba(5,5,10,0.95); border-bottom: 1px solid rgba(0,243,255,0.3); position: relative; z-index: 200; gap: 12px; }
+        .bgm-credit { color: #00f3ff; text-decoration: none; font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: bold; transition: text-shadow 0.2s; }
         .bgm-credit:hover { text-shadow: 0 0 8px #00f3ff; color: #fff; }
-        #mute-btn { background: rgba(0,243,255,0.1); border: 1px solid #00f3ff; color: #00f3ff; border-radius: 4px; padding: 4px 10px; cursor: pointer; font-size: 0.8rem; font-weight: bold; transition: all 0.2s; }
-        #mute-btn:hover { background: rgba(0,243,255,0.3); }
+        .ctrl-btn { background: rgba(0,243,255,0.1); border: 1px solid #00f3ff; color: #00f3ff; border-radius: 4px; padding: 4px 10px; cursor: pointer; font-size: 0.8rem; font-weight: bold; transition: all 0.2s; font-family: 'Pretendard', sans-serif; }
+        .ctrl-btn:hover { background: rgba(0,243,255,0.3); }
 
         /* 메인 UI 스타일 */
         header { padding: 20px 20px; text-align: center; border-bottom: 1px solid #00f3ff; background: linear-gradient(180deg, rgba(0,243,255,0.1) 0%, transparent 100%); position: relative; }
         header::before { content: "SYS.INIT.OK"; position: absolute; top: 10px; left: 10px; font-family: 'Orbitron', sans-serif; font-size: 0.6rem; color: #00f3ff; }
         
-        h2 { color: #fff; text-shadow: 0 0 5px #ff003c; border-left: 3px solid #ff003c; padding-left: 10px; margin-bottom: 25px; font-size: 1.5rem; font-weight: 700; transition: all 1s ease; }
+        h2 { color: #fff; text-shadow: 0 0 5px #ff003c; border-left: 3px solid #ff003c; padding-left: 10px; margin-bottom: 25px; font-size: 1.5rem; font-weight: 700; }
         .en-sub { display: block; font-family: 'Orbitron', sans-serif; font-size: 0.7rem; color: #00f3ff; text-shadow: 0 0 3px #00f3ff; letter-spacing: 2px; margin-top: 2px; text-transform: uppercase; }
         h3.section-title { color: #00f3ff; margin: 30px 0 15px; font-size: 1.2rem; border-bottom: 1px dashed #00f3ff; padding-bottom: 5px; }
         .en-sub-sec { font-family: 'Orbitron', sans-serif; font-size: 0.6rem; margin-left: 5px; color: rgba(0,243,255,0.6); }
@@ -142,30 +124,43 @@
         .weapon-info p { font-size: 0.8rem; color: #9ca3af; }
         .owner-tag { font-size: 0.65rem; background: rgba(255,255,255,0.15); color:#fff; padding: 2px 6px; border-radius: 2px; margin-left: 5px; vertical-align: middle; border: 1px solid rgba(255,255,255,0.3); }
         
-        .char-card { display: flex; gap: 15px; align-items: center; }
+        /* 캐릭터 미니 프로필 카드 */
+        .char-card { display: flex; gap: 15px; align-items: center; cursor: pointer; transition: all 0.2s; }
+        .char-card:hover { border-color: #00f3ff; box-shadow: 0 0 15px rgba(0, 243, 255, 0.2); background: rgba(0, 243, 255, 0.05); }
         .char-avatar { width: 60px; height: 60px; flex-shrink: 0; background: #000; border: 1px solid #00f3ff; box-shadow: inset 0 0 10px rgba(0, 243, 255, 0.3); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; clip-path: polygon(25% 0%, 75% 0%, 100% 25%, 100% 75%, 75% 100%, 25% 100%, 0% 75%, 0% 25%); }
-        .char-info h3 { font-size: 1.1rem; color: #fff; margin-bottom: 3px; }
+        .char-info { flex: 1; }
+        .char-info h3 { font-size: 1.1rem; color: #fff; margin-bottom: 3px; display: flex; align-items: center; gap: 8px; }
         .char-tag { display: inline-block; background: transparent; border: 1px solid #00f3ff; color: #00f3ff; padding: 2px 6px; font-size: 0.7rem; margin: 2px 2px 5px 0; }
 
-        /* 지도 인터랙션 및 중앙 모달 */
+        /* 지도 인터랙션 및 공통 모달 오버레이 */
         .hologram-map-container { width: 100%; height: 450px; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(0, 243, 255, 0.3); border-radius: 8px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
         .map-svg { width: 100%; height: 100%; filter: drop-shadow(0 0 5px rgba(0,243,255,0.6)); }
         .map-outline { fill: rgba(0, 243, 255, 0.05); stroke: #00f3ff; stroke-width: 1; stroke-dasharray: 4,4; }
         .map-node { cursor: pointer; outline: none; -webkit-tap-highlight-color: transparent; }
         .map-node:hover .node-circle, .map-node:active .node-circle { fill: #fff; filter: brightness(1.5); }
         .node-circle { fill: #000; stroke-width: 2; transition: all 0.2s; }
-        .node-label { font-family: 'Pretendard', sans-serif; font-size: 12px; fill: #d1d5db; font-weight: bold; pointer-events: none; transition: all 0.2s; }
+        .node-label { font-family: 'Pretendard', sans-serif; font-size: 12px; fill: #d1d5db; font-weight: bold; pointer-events: none; }
         .node-sub { font-size: 9px; font-family: 'Pretendard', sans-serif; fill: rgba(255,255,255,0.7); pointer-events: none; }
         @keyframes pulse { 0% { r: 4; opacity: 1; } 100% { r: 15; opacity: 0; } }
         .pulse-ring { fill: none; stroke-width: 1; animation: pulse 2s infinite; pointer-events: none; }
         
-        #modal-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 1000; opacity: 0; transition: opacity 0.3s ease; }
-        .modal-content { background: rgba(10, 15, 25, 0.95); border: 1px solid #00f3ff; padding: 25px; width: 85%; border-radius: 8px; position: relative; box-shadow: 0 0 30px rgba(0, 243, 255, 0.3); transform: translateY(20px); transition: transform 0.3s ease; clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px)); }
+        .modal-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 1000; opacity: 0; transition: opacity 0.3s ease; }
+        .modal-content { background: rgba(10, 15, 25, 0.95); border: 1px solid #00f3ff; padding: 25px; width: 85%; max-height: 80vh; overflow-y: auto; border-radius: 8px; position: relative; box-shadow: 0 0 30px rgba(0, 243, 255, 0.3); transform: translateY(20px); transition: transform 0.3s ease; clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px)); }
+        .modal-content::-webkit-scrollbar { width: 4px; }
+        .modal-content::-webkit-scrollbar-thumb { background: #00f3ff; border-radius: 4px; }
         .modal-content::before { content: ""; position: absolute; top: 0; left: 0; width: 30px; height: 3px; background: #00f3ff; }
         .modal-close { position: absolute; top: 15px; right: 15px; color: #9ca3af; font-size: 1.2rem; cursor: pointer; font-weight: bold; transition: color 0.2s; }
         .modal-close:hover { color: #ff003c; }
+        
         #modal-title { font-size: 1.3rem; margin-bottom: 10px; font-weight: bold; }
         
+        /* 캐릭터 상세 스탯창용 스타일 */
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 15px; }
+        .stat-item { background: rgba(0, 243, 255, 0.05); border-left: 2px solid #00f3ff; padding: 8px; font-size: 0.8rem; }
+        .stat-item span { display: block; color: #00f3ff; font-family: 'Orbitron'; font-size: 0.65rem; margin-bottom: 2px; }
+        .stat-item strong { color: #fff; }
+        .trait-box { border-top: 1px dashed rgba(0,243,255,0.3); padding-top: 15px; font-size: 0.85rem; color: #d1d5db; line-height: 1.6; }
+
         .terminal-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
         .terminal-table td { padding: 10px 5px; border-bottom: 1px solid rgba(255,255,255,0.1); }
         .terminal-table td:first-child { color: #ff003c; font-family: 'Orbitron', monospace; width: 35%; }
@@ -183,42 +178,65 @@
     <!-- 🟢 1. 로딩 화면 -->
     <div id="loading-screen">
         <div class="loader-title">SYSTEM BOOTING...</div>
-        <div class="progress-bar-container">
-            <div class="progress-bar"></div>
-        </div>
-        <div class="loading-logs" id="loading-logs">
-            <p>> CONNECTING TO SECURE SERVER...</p>
-        </div>
+        <div class="progress-bar-container"><div class="progress-bar"></div></div>
+        <div class="loading-logs" id="loading-logs"><p>> CONNECTING TO SECURE SERVER...</p></div>
     </div>
     
-    <!-- 🟢 2. 인트로 화면 (사전에 밑에 렌더링 되어 깜빡임 방지) -->
+    <!-- 🟢 2. 인트로 화면 -->
     <div id="intro-screen">
-        <div class="intro-title">
-            CIEL ACADEMY<br>OS
-            <span>SYSTEM INITIALIZATION...</span>
-        </div>
+        <div class="intro-title">CIEL ACADEMY<br>OS<span>SYSTEM INITIALIZATION...</span></div>
         <div class="disclaimer">본 사이트는 비영리 목적으로 제작되었습니다. (Non-Profit)</div>
         <button class="enter-btn" onclick="enterSite()"></button>
     </div>
 
-    <!-- 🟢 3. 상단 바 -->
+    <!-- 🟢 3. 상단 바 (BGM 변경 버튼 추가) -->
     <div class="top-bar">
+        <button class="ctrl-btn" onclick="nextBgm()">⏭️ NEXT BGM</button>
         <a href="https://youtube.com/@tooboe_john?si=nc4mA2dIXWNeE3kR" target="_blank" class="bgm-credit">원곡자: john/tooboe</a>
-        <button id="mute-btn" onclick="toggleMute()">🔊 SOUND ON</button>
+        <button id="mute-btn" class="ctrl-btn" onclick="toggleMute()">🔊 SOUND ON</button>
     </div>
 
-    <!-- 🟢 4. 중앙 모달 (지도 클릭용) -->
-    <div id="modal-overlay" onclick="closeModal(event)">
+    <!-- 🟢 4. 지도 모달창 -->
+    <div id="map-modal-overlay" class="modal-overlay" onclick="closeModal('map')">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <div class="modal-close" onclick="closeModal(true)">✕</div>
+            <div class="modal-close" onclick="closeModal('map')">✕</div>
             <h4 id="modal-title">기관명</h4>
             <p id="modal-desc" style="font-size: 0.9rem; color: #d1d5db; line-height: 1.6;">상세 설명</p>
         </div>
     </div>
 
+    <!-- 🟢 5. 캐릭터 상세 프로필 모달창 -->
+    <div id="char-modal-overlay" class="modal-overlay" onclick="closeModal('char')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-close" onclick="closeModal('char')">✕</div>
+            
+            <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 20px;">
+                <div id="char-modal-avatar" class="char-avatar" style="width:70px; height:70px; font-size:2rem;">👤</div>
+                <div>
+                    <h3 id="char-modal-name" style="color:#fff; font-size:1.4rem; margin-bottom:2px;">이름</h3>
+                    <div id="char-modal-tags"></div>
+                </div>
+            </div>
+            
+            <div class="stat-grid">
+                <div class="stat-item"><span>RACE / AGE</span><strong id="char-modal-race-age">종족 / 나이</strong></div>
+                <div class="stat-item"><span>HEIGHT</span><strong id="char-modal-height">키</strong></div>
+                <div class="stat-item"><span>ABILITY</span><strong id="char-modal-ability" class="txt-cyan">능력</strong></div>
+                <div class="stat-item"><span>GEAR/ARTIFACT</span><strong id="char-modal-gear">장비</strong></div>
+                <div class="stat-item"><span>ALIGNMENT</span><strong id="char-modal-alignment">가치관</strong></div>
+                <div class="stat-item"><span>MBTI / ENNEAGRAM</span><strong id="char-modal-personality">성격유형</strong></div>
+            </div>
+
+            <div class="trait-box">
+                <strong style="color:#00f3ff; font-family:'Orbitron'; font-size:0.75rem;">> CHARACTERISTICS</strong>
+                <p id="char-modal-trait" style="margin-top:5px;"></p>
+            </div>
+        </div>
+    </div>
+
     <header>
         <h1>CIEL ACADEMY</h1>
-        <p style="color:#00f3ff; font-size:0.8rem; font-family:'Orbitron';">DB_VER: NEO-HUNTER_OS v3.0</p>
+        <p style="color:#00f3ff; font-size:0.8rem; font-family:'Orbitron';">DB_VER: NEO-HUNTER_OS v5.0</p>
     </header>
 
     <!-- 탭 메뉴 -->
@@ -240,7 +258,7 @@
                     <div class="timeline-item">
                         <div class="timeline-date">100년 전</div>
                         <div class="timeline-title">최초의 게이트 발생</div>
-                        <div class="timeline-desc">전 세계에 게이트가 동시다발적으로 생성되며, 인류의 마력 각성이 시작됨. 독도 상공에 불명의 초대형 게이트 또한 이때 함께 발생함.</div>
+                        <div class="timeline-desc">전 세계에 게이트가 생성되며 인류의 마력 각성이 시작됨. 독도 상공에 불명의 초대형 게이트 또한 이때 함께 발생함.</div>
                     </div>
                     <div class="timeline-item alert">
                         <div class="timeline-date" style="color:#ff003c;">96년 전</div>
@@ -273,23 +291,16 @@
                 </div>
                 <div class="guild-card" style="border-color: #10b981;">
                     <h5>💎 마석 <span style="font-size: 0.75rem; color: #10b981; font-family: 'Orbitron';">[MANA STONE]</span></h5>
-                    <p>몬스터의 사체에서 추출되는 현대 인류의 <strong>가장 중요한 핵심 자원</strong>입니다. 아티팩트의 동력원부터 도시의 전력까지 모든 곳에 쓰이며, 등급에 따라 가격이 천차만별입니다. (F급 약 100만 원 / C급 약 5,000만 원 / S급 50억 원 이상)</p>
+                    <p>몬스터 사체에서 추출되는 인류의 <strong>핵심 자원</strong>. 아티팩트의 동력원부터 도시의 전력까지 쓰이며, 등급에 따라 가격이 천차만별입니다. (F급 약 100만 원 ~ S급 50억 원 이상)</p>
                 </div>
                 <div class="guild-card" style="border-color: #f59e0b;">
                     <h5>⚔️ 아티팩트 <span style="font-size: 0.75rem; color: #f59e0b; font-family: 'Orbitron';">[ARTIFACT]</span></h5>
-                    <p>현대 무기는 통하지 않으므로 <span class="txt-yellow">'마력이 깃든 장비'</span>가 반드시 필요합니다. 단, 마력 충돌 및 신체 붕괴를 방지하기 위해 <span class="txt-red">모든 헌터는 동시에 단 1개의 아티팩트만 착용 가능</span>합니다.</p>
+                    <p>현대 무기는 통하지 않으므로 <span class="txt-yellow">'마력이 깃든 장비'</span>가 반드시 필요합니다. 단, 마력 충돌을 방지하기 위해 <span class="txt-red">모든 헌터는 동시에 단 1개의 아티팩트만 착용 가능</span>합니다.</p>
                 </div>
                 <div class="guild-card" style="border-color: #a855f7;">
                     <h5>📊 헌터 등급 <span style="font-size: 0.75rem; color: #a855f7; font-family: 'Orbitron';">[RANK SYSTEM]</span></h5>
-                    <p>협회 측정 공식 계급. <span style="color:#a855f7; font-weight:bold;">F~S등급</span>으로 나뉘며 각성 시 평생의 재능이 결정됩니다. 각 등급을 판정하는 절대적인 기준은 <span class="txt-cyan">'혼자서 해당 등급의 일반 게이트를 클리어할 수 있는가'</span>입니다.</p>
+                    <p>협회 측정 공식 계급. <span style="color:#a855f7; font-weight:bold;">F~S등급</span>으로 나뉘며 각성 시 재능이 결정됩니다. 각 등급을 판정하는 절대적인 기준은 <span class="txt-cyan">'혼자서 해당 등급의 일반 게이트를 클리어할 수 있는가'</span>입니다.</p>
                 </div>
-            </div>
-
-            <h3 class="section-title">독도 미스터리 게이트<span class="en-sub-sec">DOKDO GATE</span></h3>
-            <div class="cyber-card" style="border-color: #ff003c; background: rgba(255,0,60,0.05);">
-                <h4 class="txt-red">⚠️ 독도 상공 [코드: 언노운]</h4>
-                <p>100년 전, 최초의 게이트 발생 사태 때 독도 상공에 함께 등장한 초대형 게이트입니다.</p>
-                <p style="margin-top: 10px;">측정 등급은 'F'지만 어떠한 물리적, 마법적 수단으로도 <span class="txt-red">진입 자체가 불가능</span>합니다. 생성 당시 100이었던 표면 위험도 수치는 매년 1씩 정확하게 줄어들어 <strong>현재는 '10'을 가리키고 있습니다.</strong> 전 세계가 연구 중이나 아직 내부에 대해 아무것도 모릅니다.</p>
             </div>
 
             <h3 class="section-title">차원 게이트<span class="en-sub-sec">DIMENSIONAL GATES</span></h3>
@@ -297,40 +308,42 @@
                 <div class="guild-card" style="border-color: #00f3ff;">
                     <h5>🔵 일반 게이트</h5>
                     <p>외부 통신이 가능하며 정석적인 파티 플레이로 공략 가능한 표준 게이트.</p>
+                    <p style="font-size:0.8rem; color:#00f3ff; margin-top:5px;"><strong>[입장 조건]</strong> 해당 게이트보다 1단계 낮은 등급의 헌터 파티, 또는 동일 등급 이상의 헌터 2명 이상 필수 동행.</p>
                 </div>
                 <div class="guild-card" style="border-color: #ff003c; background: rgba(255,0,60,0.05); padding: 10px;">
                     <h5 class="txt-red">🔴 레드 게이트</h5>
                     <p>진입 시 입구 폐쇄 및 통신 두절. 보스 처치 전까지 탈출 불가능한 사지(死地).</p>
                 </div>
-                <div class="guild-card" style="border-color: #f59e0b; background: rgba(245,158,11,0.05); padding: 10px;">
-                    <h5 class="txt-yellow">⚫ 게이트 브레이크</h5>
-                    <p>방치된 게이트가 붕괴하며 몬스터가 현실로 쏟아져 나오는 국가 재난 사태.</p>
-                </div>
+            </div>
+
+            <h3 class="section-title">독도 미스터리 게이트<span class="en-sub-sec">DOKDO GATE</span></h3>
+            <div class="cyber-card" style="border-color: #ff003c; background: rgba(255,0,60,0.05);">
+                <h4 class="txt-red">⚠️ 독도 상공 [코드: 언노운]</h4>
+                <p>100년 전 생성된 초대형 게이트. 등급은 'F'지만 <span class="txt-red">진입 자체가 불가능</span>합니다. 생성 시 100이었던 표면 위험도가 매년 1씩 줄어 <strong>현재는 '10'을 가리키고 있습니다.</strong></p>
             </div>
 
             <h3 class="section-title">사회 및 법률<span class="en-sub-sec">SOCIETY & LAW</span></h3>
             <div class="cyber-card">
                 <h4>🤝 이종족 공존 및 차별 금지법</h4>
-                <p>현재 지구는 인류뿐만 아니라 <span class="txt-cyan">다양한 이종족(엘프, 수인, 마족 등)이 함께 섞여 살아가는 다종족 사회</span>입니다. 종족에 대한 부당한 차별 대우나 혐오 발언 적발 시 <span class="txt-red">최대 1개월 이하의 징역(옥살이)</span>에 처해지는 강력한 무관용 원칙이 적용됩니다.</p>
+                <p>현재 지구는 인류뿐만 아니라 <span class="txt-cyan">다양한 이종족(엘프, 수인, 마족 등)이 함께 섞여 살아가는 다종족 사회</span>입니다. 종족 부당 차별 시 <span class="txt-red">최대 1개월 이하의 징역(옥살이)</span>에 처해집니다.</p>
             </div>
 
             <h3 class="section-title">국가 정세<span class="en-sub-sec">NATION STATUS</span></h3>
             <div class="cyber-card">
                 <h4>[KR] 대한민국 : 최대 헌터 국가</h4>
-                <p>전 세계에서 게이트 발생 빈도가 가장 높은 가혹한 환경. 그러나 그로 인해 <span class="txt-cyan">최상위 랭크 헌터들을 가장 많이 배출한 무력 강국</span>이 되었습니다. 힘의 균형을 위해 전 세계의 헌터 유학생들이 한국으로 몰려듭니다.</p>
+                <p>전 세계에서 게이트 발생 빈도가 가장 높아 <span class="txt-cyan">최상위 랭크 헌터들을 가장 많이 배출한 무력 강국</span>입니다. 전 세계의 헌터 유학생들이 한국으로 몰려듭니다.</p>
             </div>
 
             <h3 class="section-title">본부 및 거점<span class="en-sub-sec">HQ LOCATIONS</span></h3>
             <div class="cyber-card">
                 <h4>🏛️ 헌터 협회 본부</h4>
                 <p><strong>위치:</strong> 세종특별자치시 중앙<br>
-                지하에 설치된 <span class="txt-cyan">'인공 게이트(Artificial Gate)' 네트워크</span>를 통해 전국의 길드와 아카데미로 순식간에 공간 이동을 할 수 있습니다.</p>
+                지하에 설치된 <span class="txt-cyan">'인공 게이트' 네트워크</span>를 통해 전국의 길드와 아카데미로 순식간에 공간 이동을 할 수 있습니다.</p>
                 
                 <div style="margin-top: 15px; border-top: 1px dashed rgba(0,243,255,0.3); padding-top: 15px;">
                     <h5 style="color: #f59e0b; margin-bottom: 5px;">[협회 직속] 공주 지하 아머리 (무기상)</h5>
                     <p style="font-size: 0.85rem; color: #9ca3af;">
-                        <strong>위치:</strong> 충남 공주시 지하 벙커<br>
-                        협회에서 통제하는 최대 규모 무기고. V.I.P 특수 금고에는 <span class="txt-yellow">현존하는 전 세계 탑 티어 무기 TOP 5가 철저히 봉인 및 보관</span>되어 있습니다.
+                        협회에서 통제하는 최대 규모 무기고. V.I.P 특수 금고에는 <span class="txt-yellow">전 세계 탑 티어 무기 TOP 5가 철저히 봉인 및 보관</span>되어 있습니다.
                     </p>
                 </div>
             </div>
@@ -342,51 +355,16 @@
 
             <h3 class="section-title">명품 아티팩트 DB<span class="en-sub-sec">TOP 5 WEAPONS</span></h3>
             <div class="weapon-list">
-                <div class="weapon-item rank-top">
-                    <div class="weapon-rank">1</div>
-                    <div class="weapon-info">
-                        <h5>종말의 검, 라그나로크 <span class="owner-tag">협회 소유</span></h5>
-                        <p>일격에 산을 반으로 가르는 현존 최강의 대검.</p>
-                        <span style="font-size: 0.75rem; color: #f59e0b; font-weight: bold;">거래가: 1조 5,000억 원</span>
-                    </div>
-                </div>
-                <div class="weapon-item rank-top">
-                    <div class="weapon-rank">2</div>
-                    <div class="weapon-info">
-                        <h5>천지창조, 제네시스 <span class="owner-tag">협회 소유</span></h5>
-                        <p>사용자의 마나를 무한에 가깝게 증폭시키는 기적의 지팡이.</p>
-                        <span style="font-size: 0.75rem; color: #f59e0b; font-weight: bold;">거래가: 1조 2,000억 원</span>
-                    </div>
-                </div>
-                <div class="weapon-item rank-top">
-                    <div class="weapon-rank">3</div>
-                    <div class="weapon-info">
-                        <h5>절대 방벽, 아이기스 레플리카 <span class="owner-tag">협회 소유</span></h5>
-                        <p>S급 몬스터의 치명적 광역 공격을 3회 무효화하는 신화적 방패.</p>
-                        <span style="font-size: 0.75rem; color: #f59e0b; font-weight: bold;">거래가: 9,500억 원</span>
-                    </div>
-                </div>
-                <div class="weapon-item rank-top">
-                    <div class="weapon-rank">4</div>
-                    <div class="weapon-info">
-                        <h5>시공 단검, 디멘션 워커 <span class="owner-tag">협회 소유</span></h5>
-                        <p>대상 좌표를 비틀어 물리/마법 방어력을 완전 무시하는 궁극의 암살검.</p>
-                        <span style="font-size: 0.75rem; color: #f59e0b; font-weight: bold;">거래가: 8,800억 원</span>
-                    </div>
-                </div>
-                <div class="weapon-item rank-top">
-                    <div class="weapon-rank">5</div>
-                    <div class="weapon-info">
-                        <h5>신록의 숨결, 위그드라실 코어 <span class="owner-tag">협회 소유</span></h5>
-                        <p>소지자의 치명상을 초당 10%씩 자동 재생시키는 생명 유지 보주.</p>
-                        <span style="font-size: 0.75rem; color: #f59e0b; font-weight: bold;">거래가: 8,000억 원</span>
-                    </div>
-                </div>
+                <div class="weapon-item rank-top"><div class="weapon-rank">1</div><div class="weapon-info"><h5>종말의 검, 라그나로크 <span class="owner-tag">협회 소유</span></h5><p>일격에 산을 반으로 가르는 현존 최강의 대검.</p><span style="font-size: 0.75rem; color: #f59e0b; font-weight: bold;">거래가: 1조 5,000억 원</span></div></div>
+                <div class="weapon-item rank-top"><div class="weapon-rank">2</div><div class="weapon-info"><h5>천지창조, 제네시스 <span class="owner-tag">협회 소유</span></h5><p>마나를 무한에 가깝게 증폭시키는 기적의 지팡이.</p><span style="font-size: 0.75rem; color: #f59e0b; font-weight: bold;">거래가: 1조 2,000억 원</span></div></div>
+                <div class="weapon-item rank-top"><div class="weapon-rank">3</div><div class="weapon-info"><h5>절대 방벽, 아이기스 레플리카 <span class="owner-tag">협회 소유</span></h5><p>S급 몬스터의 공격을 3회 무효화하는 방패.</p><span style="font-size: 0.75rem; color: #f59e0b; font-weight: bold;">거래가: 9,500억 원</span></div></div>
+                <div class="weapon-item rank-top"><div class="weapon-rank">4</div><div class="weapon-info"><h5>시공 단검, 디멘션 워커 <span class="owner-tag">협회 소유</span></h5><p>좌표를 비틀어 방어력을 완전 무시하는 암살검.</p><span style="font-size: 0.75rem; color: #f59e0b; font-weight: bold;">거래가: 8,800억 원</span></div></div>
+                <div class="weapon-item rank-top"><div class="weapon-rank">5</div><div class="weapon-info"><h5>신록의 숨결, 위그드라실 코어 <span class="owner-tag">협회 소유</span></h5><p>치명상을 초당 10%씩 자동 재생시키는 생명 보주.</p><span style="font-size: 0.75rem; color: #f59e0b; font-weight: bold;">거래가: 8,000억 원</span></div></div>
             </div>
 
             <h3 class="section-title">4대 헌터 길드<span class="en-sub-sec">THE 4 MAJOR GUILDS</span></h3>
             <div class="cyber-card">
-                <div class="guild-card" style="border-color: #ff003c;"><h5>⚔️ 레드 뱅가드 (서울) / <span class="txt-red">물리 딜러</span></h5><p>전방을 무자비하게 파괴하는 근접 전투 특화 길드.</p></div>
+                <div class="guild-card" style="border-color: #ff003c;"><h5>⚔️ 레드 뱅가드 (서울) / <span class="txt-red">물리 딜러</span></h5><p>전방을 파괴하며 돌파하는 근접 전투 특화 길드.</p></div>
                 <div class="guild-card" style="border-color: #a855f7;"><h5>🔮 아스트랄 코어 (대전) / <span style="color:#a855f7;">마법사</span></h5><p>광역 폭격 및 게이트 마나 구조 해석 연구소.</p></div>
                 <div class="guild-card" style="border-color: #f59e0b;"><h5>🛡️ 아이언 이지스 (부산) / <span class="txt-yellow">탱커</span></h5><p>해안선 괴수들의 진격을 막아내는 철벽의 방패들.</p></div>
                 <div class="guild-card" style="border-color: #10b981;"><h5>🌿 아발론 생명공학 (제주) / <span style="color:#10b981;">서포터</span></h5><p>최상급 힐러 보유 및 특수 회복 포션 제조 독점.</p></div>
@@ -400,24 +378,47 @@
             </div>
         </div>
 
-        <!-- 2. 인물 탭 -->
+        <!-- 2. 인물 탭 (캐릭터 클릭 상호작용) -->
         <div id="tab-chars" class="tab-content">
             <h2>인물 데이터베이스<span class="en-sub">CHARACTER DATA</span></h2>
-            <div class="cyber-card char-card">
-                <div class="char-avatar">👤</div>
-                <div class="char-info"><h3>교장</h3><div><span class="char-tag">GAMBLE</span> <span class="char-tag">ALCOHOLIC</span></div><p>최고 권한자. 현재 위치 불명(카지노 추정).</p></div>
+            <p style="font-size: 0.8rem; color: #00f3ff; margin-bottom: 15px; animation: blink 1.5s infinite;">► 캐릭터 프로필을 클릭하면 상세 스탯이 출력됩니다.</p>
+            
+            <h3 class="section-title">아카데미 교수진<span class="en-sub-sec">FACULTY MEMBERS</span></h3>
+            
+            <div class="cyber-card char-card" onclick="showCharInfo('yeonghui')">
+                <div class="char-avatar" style="border-color:#ff003c; box-shadow: inset 0 0 10px rgba(255,0,60,0.3);">👤</div>
+                <div class="char-info">
+                    <h3>영희 <span class="char-tag" style="border-color:#ff003c; color:#ff003c;">F급</span></h3>
+                    <div><span class="char-tag">엘프</span> <span class="char-tag">교장</span></div>
+                    <p>최고 권한자. 아카데미의 절대적 물주이자 도박중독자.</p>
+                </div>
             </div>
-            <div class="cyber-card char-card">
-                <div class="char-avatar">🔮</div>
-                <div class="char-info"><h3>마법 교수</h3><div><span class="char-tag">DRUNK</span> <span class="char-tag">OVERWORK</span></div><p>대리 실무자. 피로와 알코올 의존증 복합 증세.</p></div>
+
+            <div class="cyber-card char-card" onclick="showCharInfo('ahyeon')">
+                <div class="char-avatar" style="border-color:#00f3ff; box-shadow: inset 0 0 10px rgba(0,243,255,0.3);">⚔️</div>
+                <div class="char-info">
+                    <h3>최아현 <span class="char-tag" style="border-color:#00f3ff; color:#00f3ff;">B급</span></h3>
+                    <div><span class="char-tag">인류</span> <span class="char-tag">훈련 담당</span></div>
+                    <p>교장의 일을 대부분 대신하는 가장 바쁘고 불쌍한 교수.</p>
+                </div>
             </div>
-            <div class="cyber-card char-card">
-                <div class="char-avatar">⚕️</div>
-                <div class="char-info"><h3>보건 선생</h3><div><span class="char-tag">FIRST_AID</span> <span class="char-tag">CYNIC</span></div><p>부상자 극혐오. 치료 중 폭언 발생 확률 99%.</p></div>
+
+            <div class="cyber-card char-card" onclick="showCharInfo('charlotte')">
+                <div class="char-avatar" style="border-color:#a855f7; box-shadow: inset 0 0 10px rgba(168,85,247,0.3);">😈</div>
+                <div class="char-info">
+                    <h3>샬롯 <span class="char-tag" style="border-color:#a855f7; color:#a855f7;">A급</span></h3>
+                    <div><span class="char-tag">마족</span> <span class="char-tag">윤리 담당</span></div>
+                    <p>장난을 좋아하는 메스가키. 학생 놀리는 것을 제일 좋아한다.</p>
+                </div>
             </div>
-            <div class="cyber-card char-card">
-                <div class="char-avatar">⚖️</div>
-                <div class="char-info"><h3>윤리 교수</h3><div><span class="char-tag">MORAL</span> <span class="char-tag">STRICT</span></div><p>규정 위반 절대 불가. 이종족 화합 강박. 융통성 제로.</p></div>
+
+            <div class="cyber-card char-card" onclick="showCharInfo('areum')">
+                <div class="char-avatar" style="border-color:#10b981; box-shadow: inset 0 0 10px rgba(16,185,129,0.3);">👼</div>
+                <div class="char-info">
+                    <h3>박아름 <span class="char-tag" style="border-color:#10b981; color:#10b981;">B급</span></h3>
+                    <div><span class="char-tag">천족</span> <span class="char-tag">응급처치 학과</span></div>
+                    <p>학생들에게 부드럽고 다정하여 인기가 가장 많은 교수.</p>
+                </div>
             </div>
         </div>
 
@@ -437,7 +438,7 @@
                     <line x1="140" y1="210" x2="100" y2="400" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
                     <line x1="135" y1="170" x2="125" y2="200" stroke="rgba(245,158,11,0.3)" stroke-width="1" stroke-dasharray="2,2"/> 
 
-                    <!-- 독도 미스터리 게이트 추가 -->
+                    <!-- 독도 미스터리 게이트 -->
                     <g class="map-node" onclick="showMapInfo('dokdo')">
                         <circle class="pulse-ring" cx="280" cy="150" stroke="#ff003c" />
                         <circle class="node-circle" cx="280" cy="150" r="4" stroke="#ff003c" />
@@ -500,10 +501,21 @@
 </div>
 
 <script>
-    // 🟢 유튜브 및 로딩 동기화 시스템
+    // 🟢 BGM 리스트 및 유튜브 연동 시스템
+    const bgmList = [
+        'pCvRuC33oBI',
+        'Fl366CAe_h8',
+        'xpVO-BFDk38',
+        'rezAOoUIizE',
+        'VEZUdUAj2tQ',
+        'ALQUnfGON1M',
+        'wIr1GKrkTSg',
+        'X82QoCLk0Yo'
+    ];
+    let currentBgmIndex = 0;
+    
     let player;
     let isMuted = false;
-    let timeChecker;
     let isYtReady = false;
     let isUiReady = false;
 
@@ -535,8 +547,8 @@
     // 유튜브 API 로드 완료 시 호출
     function onYouTubeIframeAPIReady() {
         player = new YT.Player('ytplayer', {
-            height: '0', width: '0', videoId: 'VEZUdUAj2tQ', 
-            playerVars: { 'autoplay': 0, 'controls': 0, 'loop': 1, 'playlist': 'VEZUdUAj2tQ' },
+            height: '0', width: '0', videoId: bgmList[currentBgmIndex], 
+            playerVars: { 'autoplay': 0, 'controls': 0 },
             events: {
                 'onReady': onPlayerReady,
                 'onStateChange': onPlayerStateChange
@@ -557,23 +569,19 @@
         }
     }
 
+    // 음악이 끝나면 다음 곡으로 순차적 반복 재생
     function onPlayerStateChange(event) {
-        if (event.data == YT.PlayerState.PLAYING) {
-            timeChecker = setInterval(checkTime, 500); 
-        } else {
-            clearInterval(timeChecker);
-            document.body.classList.remove('grand-mode');
+        if (event.data === YT.PlayerState.ENDED) {
+            currentBgmIndex = (currentBgmIndex + 1) % bgmList.length;
+            player.loadVideoById(bgmList[currentBgmIndex]);
         }
     }
 
-    function checkTime() {
-        if (!player || !player.getCurrentTime) return;
-        let time = player.getCurrentTime();
-        if (time >= 129 && time <= 159) {
-            document.body.classList.add('grand-mode');
-        } else {
-            document.body.classList.remove('grand-mode');
-        }
+    // 다음 곡 버튼
+    function nextBgm() {
+        if (!player) return;
+        currentBgmIndex = (currentBgmIndex + 1) % bgmList.length;
+        player.loadVideoById(bgmList[currentBgmIndex]);
     }
 
     // 🟢 탭 밖으로 나갔다가 돌아올 시 음악 재생 유지
@@ -607,7 +615,6 @@
     function enterSite() {
         document.getElementById('intro-screen').classList.add('hidden');
         document.body.style.overflow = 'auto'; 
-        // 딜레이 없이 즉시 재생
         if (player && typeof player.playVideo === 'function') {
             player.playVideo(); 
         }
@@ -620,9 +627,9 @@
         document.getElementById(tabId).classList.add('active');
     }
 
-    // 지도 상호작용 데이터 (독도 추가)
+    // 🟢 지도 모달 데이터
     const mapData = {
-        'dokdo': { title: '독도 상공 [코드: 언노운]', desc: '100년 전 최초 발생한 이래 아무도 진입하지 못한 미스터리 게이트. 위험도 수치는 100년 전 100에서 매년 1씩 줄어 현재 10을 가리키고 있습니다.', color: '#ff003c' },
+        'dokdo': { title: '독도 상공 [코드: 언노운]', desc: '100년 전 최초 발생한 이래 아무도 진입하지 못한 미스터리 게이트. 표면 위험도가 매년 1씩 줄어 현재 10을 가리키고 있습니다.', color: '#ff003c' },
         'academy': { title: '인천 (해상) [시엘 아카데미]', desc: '해상 인공섬. 강력한 보호막으로 둘러싸여 있습니다.', color: '#00f3ff' },
         'seoul': { title: '서울 [레드 뱅가드]', desc: '북부 방어선을 뚫어버리는 물리 딜러 특화 길드.', color: '#ff003c' },
         'sejong': { title: '세종 [헌터 협회 본부]', desc: '인공 게이트로 전국 길드에 요원을 파견하는 관리 기관.', color: '#ffffff' },
@@ -633,26 +640,77 @@
     };
 
     function showMapInfo(nodeId) {
-        const overlay = document.getElementById('modal-overlay');
-        const titleElem = document.getElementById('modal-title');
-        const descElem = document.getElementById('modal-desc');
+        const overlay = document.getElementById('map-modal-overlay');
         const data = mapData[nodeId];
-        
-        titleElem.innerText = '📍 ' + data.title;
-        titleElem.style.color = data.color;
-        titleElem.style.textShadow = `0 0 5px ${data.color}`;
-        descElem.innerText = data.desc;
-        
+        document.getElementById('modal-title').innerText = '📍 ' + data.title;
+        document.getElementById('modal-title').style.color = data.color;
+        document.getElementById('modal-desc').innerText = data.desc;
         overlay.style.display = 'flex';
         setTimeout(() => { overlay.style.opacity = '1'; overlay.querySelector('.modal-content').style.transform = 'translateY(0)'; }, 10);
     }
 
-    function closeModal(event) {
-        if (event === true || event.target.id === 'modal-overlay') {
-            const overlay = document.getElementById('modal-overlay');
-            overlay.style.opacity = '0';
-            overlay.querySelector('.modal-content').style.transform = 'translateY(20px)';
-            setTimeout(() => { overlay.style.display = 'none'; }, 300);
+    // 🟢 캐릭터 프로필 모달 데이터 및 함수
+    const charData = {
+        'yeonghui': { 
+            name: '영희', role: '교장 (Principal)', race: '엘프', age: '302세', height: '159cm', 
+            rank: 'F급 (미심사)', ability: '아공간', gear: '없음', artifact: '없음',
+            mbti: 'ESTP', enneagram: '7w8', alignment: '혼돈 중립 (Chaotic Neutral)', avatar: '👤', color: '#ff003c',
+            trait: '아카데미의 최고 권한자. 술주정뱅이에 도박 중독자라 등급 심사조차 보지 않아 공식 등급은 F급이다. 하지만 돈이 워낙 많아서 그녀의 자본력으로 아카데미는 매우 잘 굴러간다. (한국 출신)'
+        },
+        'ahyeon': { 
+            name: '최아현', role: '능력 훈련담당 교수', race: '인류', age: '26세', height: '163cm', 
+            rank: 'B급', ability: '순간이동', gear: '없음', artifact: '없음',
+            mbti: 'ISTJ', enneagram: '1w2', alignment: '질서 선 (Lawful Good)', avatar: '⚔️', color: '#00f3ff',
+            trait: '교장 영희의 일을 대부분 떠맡아 대신 처리하는 실질적인 관리자. 아카데미에서 가장 바쁘게 구르며 만성 피로에 시달리고 있다. (한국 출신)'
+        },
+        'charlotte': { 
+            name: '샬롯', role: '도덕/윤리담당 교수', race: '마족', age: '24세', height: '145cm', 
+            rank: 'A급', ability: '업화', gear: '없음', artifact: '모노클 (대상의 속마음을 읽음, B급)',
+            mbti: 'ENTP', enneagram: '7w6', alignment: '혼돈 악 (Chaotic Evil)', avatar: '😈', color: '#a855f7',
+            trait: '장난스럽고 남 놀리는 것을 매우 좋아하는 전형적인 메스가키. 아이러니하게도 아카데미에서 가장 올바라야 할 도덕과 윤리를 담당하고 있다. (미국 출신)'
+        },
+        'areum': { 
+            name: '박아름', role: '구조/응급처치 교수', race: '천족', age: '29세', height: '164cm', 
+            rank: 'B급', ability: '치유 (단일대상)', gear: '없음', artifact: '없음',
+            mbti: 'ENFJ', enneagram: '2w1', alignment: '중립 선 (Neutral Good)', avatar: '👼', color: '#10b981',
+            trait: '다친 학생들을 돌보는 구조/응급처치 학과 교수. 성격이 매우 부드럽고 다정하여 아카데미 내에서 학생들에게 인기가 가장 많다. (한국 출신)'
+        }
+    };
+
+    function showCharInfo(nodeId) {
+        const overlay = document.getElementById('char-modal-overlay');
+        const data = charData[nodeId];
+        
+        document.getElementById('char-modal-avatar').innerText = data.avatar;
+        document.getElementById('char-modal-avatar').style.borderColor = data.color;
+        document.getElementById('char-modal-avatar').style.boxShadow = `inset 0 0 10px ${data.color}4d`;
+        
+        document.getElementById('char-modal-name').innerText = data.name;
+        document.getElementById('char-modal-tags').innerHTML = `<span class="char-tag" style="border-color:${data.color}; color:${data.color};">${data.rank}</span> <span class="char-tag">${data.role}</span>`;
+        
+        document.getElementById('char-modal-race-age').innerText = `${data.race} / ${data.age}`;
+        document.getElementById('char-modal-height').innerText = data.height;
+        document.getElementById('char-modal-ability').innerText = data.ability;
+        document.getElementById('char-modal-gear').innerText = `${data.gear} / ${data.artifact}`;
+        document.getElementById('char-modal-alignment').innerText = data.alignment;
+        document.getElementById('char-modal-personality').innerText = `${data.mbti} / ${data.enneagram}`;
+        document.getElementById('char-modal-trait').innerText = data.trait;
+
+        overlay.style.display = 'flex';
+        setTimeout(() => { overlay.style.opacity = '1'; overlay.querySelector('.modal-content').style.transform = 'translateY(0)'; }, 10);
+    }
+
+    // 모달 닫기 공통 함수
+    function closeModal(type) {
+        let overlayId = type === 'char' ? 'char-modal-overlay' : 'map-modal-overlay';
+        if (type === true || type === 'char' || type === 'map' || event.target.classList.contains('modal-overlay')) {
+            if (type === true && event) { overlayId = event.target.closest('.modal-overlay').id; }
+            const overlay = document.getElementById(overlayId);
+            if(overlay) {
+                overlay.style.opacity = '0';
+                overlay.querySelector('.modal-content').style.transform = 'translateY(20px)';
+                setTimeout(() => { overlay.style.display = 'none'; }, 300);
+            }
         }
     }
 </script>
