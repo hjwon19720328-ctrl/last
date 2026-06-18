@@ -52,6 +52,13 @@
         .enter-btn::before { content: "ENTER / 들어가기"; position: relative; z-index: 2; letter-spacing: 2px; }
         .enter-btn:hover { background: rgba(0, 243, 255, 0.2); box-shadow: 0 0 20px rgba(0, 243, 255, 0.6); }
 
+        /* 상단 바 */
+        .top-bar { display: flex; justify-content: flex-end; align-items: center; padding: 8px 15px; background: rgba(5,5,10,0.95); border-bottom: 1px solid rgba(0,243,255,0.3); position: relative; z-index: 200; gap: 12px; }
+        .bgm-credit { color: #00f3ff; text-decoration: none; font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: bold; transition: text-shadow 0.2s; }
+        .bgm-credit:hover { text-shadow: 0 0 8px #00f3ff; color: #fff; }
+        #mute-btn { background: rgba(0,243,255,0.1); border: 1px solid #00f3ff; color: #00f3ff; border-radius: 4px; padding: 4px 10px; cursor: pointer; font-size: 0.8rem; font-weight: bold; transition: all 0.2s; font-family: 'Pretendard', sans-serif;}
+        #mute-btn:hover { background: rgba(0,243,255,0.3); }
+
         /* 메인 UI 스타일 */
         header { padding: 20px 20px; text-align: center; border-bottom: 1px solid #00f3ff; background: linear-gradient(180deg, rgba(0,243,255,0.1) 0%, transparent 100%); position: relative; }
         header::before { content: "SYS.INIT.OK"; position: absolute; top: 10px; left: 10px; font-family: 'Orbitron', sans-serif; font-size: 0.6rem; color: #00f3ff; }
@@ -171,28 +178,31 @@
 </head>
 <body>
 
+<audio id="bgm-player" src="BGM.mp3" loop></audio>
+
 <div class="app-container">
 
-    <!-- 상단 광고 배너 -->
     <div class="ad-banner" onclick="alert('현재 재고가 모두 소진되었습니다. (품절)')">
         [AD] 📱 세계 최초 S급 마석 코어 탑재 스마트폰 출시! 한정 수량 판매 중! ►
     </div>
 
-    <!-- 로딩 화면 -->
     <div id="loading-screen">
         <div class="loader-title">SYSTEM BOOTING...</div>
         <div class="progress-bar-container"><div class="progress-bar"></div></div>
         <div class="loading-logs" id="loading-logs"><p>> CONNECTING TO SECURE SERVER...</p></div>
     </div>
     
-    <!-- 인트로 화면 -->
     <div id="intro-screen">
         <div class="intro-title">CIEL ACADEMY<br>OS<span>SYSTEM INITIALIZATION...</span></div>
-        <div class="disclaimer">본 사이트는 비영리 목적으로 제작되었습니다. (음악 및 광고 삭제 버전)</div>
+        <div class="disclaimer">본 사이트는 비영리 목적으로 제작되었습니다.</div>
         <button class="enter-btn" onclick="enterSite()"></button>
     </div>
 
-    <!-- 지도 모달창 -->
+    <div class="top-bar">
+        <a href="https://youtube.com/@tooboe_john" target="_blank" class="bgm-credit">원곡자: john/tooboe</a>
+        <button id="mute-btn" onclick="toggleMute()">🔊 SOUND ON</button>
+    </div>
+
     <div id="map-modal-overlay" class="modal-overlay" onclick="closeModal('map')">
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="modal-close" onclick="closeModal('map')">✕</div>
@@ -201,7 +211,6 @@
         </div>
     </div>
 
-    <!-- 캐릭터 상세 프로필 모달창 -->
     <div id="char-modal-overlay" class="modal-overlay" onclick="closeModal('char')">
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="modal-close" onclick="closeModal('char')">✕</div>
@@ -228,12 +237,10 @@
                 <p id="char-modal-trait" style="margin-top:5px;"></p>
             </div>
 
-            <!-- 🟢 이미지 갤러리 영역 -->
             <div id="char-modal-gallery" class="gallery-container"></div>
         </div>
     </div>
 
-    <!-- 🟢 라이트박스 오버레이 -->
     <div id="lightbox-overlay" onclick="closeLightbox(event)">
         <div class="lightbox-close" onclick="closeLightbox(true)">✕</div>
         <button class="lightbox-nav prev" onclick="changeImage(-1, event)">&#10094;</button>
@@ -243,10 +250,9 @@
 
     <header>
         <h1>CIEL ACADEMY</h1>
-        <p style="color:#00f3ff; font-size:0.8rem; font-family:'Orbitron';">DB_VER: NEO-HUNTER_OS v12.0</p>
+        <p style="color:#00f3ff; font-size:0.8rem; font-family:'Orbitron';">DB_VER: NEO-HUNTER_OS v13.0</p>
     </header>
 
-    <!-- 탭 메뉴 -->
     <div class="tab-menu">
         <button class="tab-button active" onclick="openTab('tab-world')">세계관</button>
         <button class="tab-button" onclick="openTab('tab-history')">역사</button>
@@ -256,7 +262,6 @@
     </div>
 
     <div class="content-area">
-        <!-- 1. 세계관 탭 -->
         <div id="tab-world" class="tab-content active">
             <h2>세계관 및 세력 구도<span class="en-sub">WORLD & FACTIONS</span></h2>
 
@@ -378,7 +383,6 @@
             </div>
         </div>
 
-        <!-- 2. 역사 탭 -->
         <div id="tab-history" class="tab-content">
             <h2>역사 기록<span class="en-sub">HISTORY TIMELINE</span></h2>
             <div class="cyber-card" style="padding-left: 10px;">
@@ -412,11 +416,9 @@
             </div>
         </div>
 
-        <!-- 3. 인물 탭 -->
         <div id="tab-chars" class="tab-content">
             <h2>인물 데이터베이스<span class="en-sub">CHARACTER DATA</span></h2>
             
-            <!-- 🟢 스몰 탭 (서브 메뉴) -->
             <div class="sub-tab-menu">
                 <button class="sub-tab-btn active" onclick="filterChar('all', this)">ALL</button>
                 <button class="sub-tab-btn" onclick="filterChar('academy', this)">아카데미</button>
@@ -424,9 +426,8 @@
                 <button class="sub-tab-btn" onclick="filterChar('hound', this)">사냥개</button>
             </div>
 
-            <p style="font-size: 0.8rem; color: #00f3ff; margin-bottom: 15px; animation: blink 1.5s infinite;">► 캐릭터 프로필을 클릭하면 일러스트와 상세 스탯이 출력됩니다.</p>
+            <p style="font-size: 0.8rem; color: #00f3ff; margin-bottom: 15px; animation: blink 1.5s infinite;">► 캐릭터 프로필을 클릭하면 일러스트 갤러리와 상세 스탯이 출력됩니다.</p>
             
-            <!-- ====== [1] 아카데미 그룹 ====== -->
             <div class="char-group" data-group="academy">
                 <h3 class="section-title">아카데미 교수진<span class="en-sub-sec">FACULTY MEMBERS</span></h3>
                 
@@ -550,7 +551,6 @@
                 </div>
             </div>
 
-            <!-- ====== [2] 협회 / 길드 그룹 ====== -->
             <div class="char-group" data-group="guild">
                 <h3 class="section-title">헌터 협회 본부<span class="en-sub-sec">HUNTER ASSOCIATION</span></h3>
                 <div class="cyber-card char-card" onclick="showCharInfo('ahyeon_pres')">
@@ -600,7 +600,6 @@
                 </div>
             </div>
 
-            <!-- ====== [3] 사냥개 그룹 ====== -->
             <div class="char-group" data-group="hound">
                 <h3 class="section-title">사냥개 (범죄조직)<span class="en-sub-sec">THE HOUNDS</span></h3>
                 <div class="cyber-card char-card" onclick="showCharInfo('isabel')">
@@ -622,7 +621,6 @@
                 </div>
             </div>
 
-            <!-- ====== [4] 미관측 개체 (ALL에서만 보임) ====== -->
             <div class="char-group" data-group="unknown">
                 <h3 class="section-title">미관측 개체<span class="en-sub-sec">UNKNOWN ENTITY</span></h3>
                 <div class="cyber-card char-card" onclick="showCharInfo('evelyn')">
@@ -637,7 +635,6 @@
 
         </div>
 
-        <!-- 4. 지도 탭 -->
         <div id="tab-map" class="tab-content">
             <h2>레이더 스캔<span class="en-sub">LOCATION RADAR</span></h2>
             <p style="font-size: 0.8rem; color: #00f3ff; margin-bottom: 10px;">► 지도에서 거점을 클릭하여 상세 정보를 확인하세요.</p>
@@ -698,7 +695,6 @@
             </div>
         </div>
 
-        <!-- 5. 명령어 탭 -->
         <div id="tab-cmds" class="tab-content">
             <h2>시스템 명령어<span class="en-sub">SYSTEM COMMANDS</span></h2>
             <div class="cyber-card">
@@ -714,6 +710,9 @@
 </div>
 
 <script>
+    // 🟢 로컬 오디오 변수
+    let isMuted = false;
+
     // 🟢 로딩 애니메이션
     document.addEventListener("DOMContentLoaded", () => {
         const logs = [
@@ -738,11 +737,42 @@
         }, 2500);
     });
 
-    // 시작 화면 진입
+    // 시작 화면 진입 및 로컬 오디오 재생
     function enterSite() {
         document.getElementById('intro-screen').classList.add('hidden');
         document.body.style.overflow = 'auto'; 
+        
+        const bgm = document.getElementById('bgm-player');
+        bgm.play().catch(e => console.log("Audio play blocked by browser:", e));
     }
+
+    // 🟢 로컬 오디오 음소거 토글
+    function toggleMute() {
+        const bgm = document.getElementById('bgm-player');
+        const btn = document.getElementById('mute-btn');
+        if (isMuted) {
+            bgm.muted = false;
+            isMuted = false;
+            btn.innerText = '🔊 SOUND ON';
+            btn.style.color = '#00f3ff';
+        } else {
+            bgm.muted = true;
+            isMuted = true;
+            btn.innerText = '🔇 MUTED';
+            btn.style.color = '#ff003c';
+        }
+    }
+
+    // 🟢 탭 밖으로 나갔다가 돌아올 시 오디오 재생 유지
+    document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "visible") {
+            const introHidden = document.getElementById('intro-screen').classList.contains('hidden');
+            const bgm = document.getElementById('bgm-player');
+            if (introHidden && !isMuted && bgm.paused) {
+                bgm.play().catch(e => console.log(e));
+            }
+        }
+    });
 
     // 메인 탭 메뉴 전환
     function openTab(tabId) {
@@ -816,8 +846,57 @@
         document.getElementById('lightbox-img').src = currentLightboxImages[currentLightboxIndex];
     }
 
-    // 🟢 캐릭터 프로필 모달 데이터 (장비, 아티팩트 및 이미지 코드 추가)
+    // 🟢 캐릭터 프로필 모달 데이터 (장비, 아티팩트 및 이미지 코드 포함)
     const charData = {
+        
+        // 협회 본부
+        'ahyeon_pres': {
+            code: 'D', name: '박아현', role: '협회장', race: '인류/엘프 혼혈', age: '21세', height: '160cm',
+            rank: 'C급', ability: '없음', gear: '호신용 은장도', artifact: '차원 테블릿',
+            mbti: 'ESTJ', enneagram: '1w9', alignment: '질서 중립 (Lawful Neutral)', color: '#ffffff',
+            trait: '규율을 중요하게 생각하지만 상황에 따라 유도리가 넘친다. 혼혈이지만 귀가 평범하다는 사실에 콤플렉스가 있어 놀리면 매우 화를 낸다. (한국 출신)<br><br><span style="color:#f59e0b;">[아티팩트: 차원 테블릿]</span> 공간 좌표를 강제로 뚫어 인공 게이트를 원격으로 열 수 있는 특수 통신기기.'
+        },
+
+        // 길드 마스터
+        'haneul': {
+            code: 'y', name: '박하늘', role: '아이언 이지스 길마', race: '픽시', age: '32세', height: '135cm',
+            rank: 'S급', ability: '피해 축적 후 방출', gear: '거대한 도끼', artifact: '마이크로 비키니 (S급)',
+            mbti: 'ESTP', enneagram: '8w7', alignment: '혼돈 선 (Chaotic Good)', color: '#f59e0b',
+            trait: '건방진 메스가키 스타일의 픽시 길드마스터. 파격적인 복장(비키니)과 작은 체구로 거대한 도끼를 휘두른다. 길마 중 인기가 가장 많지만 의외로 칭찬을 받으면 부끄러움을 많이 탄다. (한국 출신)<br><br><span style="color:#f59e0b;">[아티팩트: 마이크로 비키니]</span> 착용자를 절대적으로 보호하는 S급 역장과 지속적인 체력 재생 효과를 제공하는 기적의 방어구.'
+        },
+        'flare': {
+            code: 'z', name: '플레어', role: '아스트랄 코어 길마', race: '인류', age: '27세', height: '159cm',
+            rank: 'S급', ability: '원소마법', gear: '마법 지팡이', artifact: '심연의 로브 (B급)',
+            mbti: 'INFP', enneagram: '9w1', alignment: '중립 선 (Neutral Good)', color: '#a855f7',
+            trait: '기척을 줄이는 로브를 뒤집어쓰고 다니는 소심하고 부끄러움 많은 마법사. 성격과 달리 구사하는 원소마법의 화력은 가히 세계 최강 수준이다. (이탈리아 출신)<br><br><span style="color:#f59e0b;">[아티팩트: 심연의 로브]</span> 마력 파장과 존재감을 대폭 지워주어 은밀한 캐스팅을 돕는 B급 방어구.'
+        },
+        'harin': {
+            code: 'v', name: '박하린', role: '레드 뱅가드 길마', race: '상어 수인', age: '27세', height: '159cm',
+            rank: 'S급', ability: '지반 수영', gear: '톱니바퀴 대검', artifact: '아공간 반지',
+            mbti: 'ESTP', enneagram: '8w7', alignment: '혼돈 선 (Chaotic Good)', color: '#ff003c',
+            trait: '장난을 많이 치지만 길드 일은 확실하게 처리하는 믿음직한 리더. 자기 사람이라고 생각하면 한없이 관대해진다. (한국 출신)<br><br><span style="color:#f59e0b;">[아티팩트: 아공간 반지]</span> 그녀의 무거운 대검과 전리품들을 간편하게 수납할 수 있는 초소형 창고 아티팩트.'
+        },
+        'sophia': {
+            code: 'w', name: '소피아', role: '아발론 생명공학 길마', race: '마족', age: '29세', height: '160cm',
+            rank: 'A급', ability: '생명력 조작', gear: '거대한 십자가 방패', artifact: '여명의 장미 (A급)',
+            mbti: 'ISFJ', enneagram: '1w2', alignment: '질서 중립 (Lawful Neutral)', color: '#10b981',
+            trait: '인자하고 작은 일에도 자주 당황하는 신실한 성격의 수녀님. "마족 주제에 웬 수녀냐"라고 조롱한 사람들은 모두 쥐도 새도 모르게 옥살이 중이라는 흉흉한 소문이 있다.<br><br><span style="color:#f59e0b;">[아티팩트: 여명의 장미]</span> 착용자가 즉사하지만 않으면, 브로치를 소모하여 단 1번 체력을 100% 회복시키는 목숨 연장 아티팩트.'
+        },
+
+        // 범죄 조직 (사냥개)
+        'isabel': {
+            code: 'B', name: '이사벨', role: '사냥개 수장', race: '뱀 수인', age: '44세', height: '169cm',
+            rank: 'S급', ability: '신경독', gear: '맹독성 단검', artifact: '공허의 반지',
+            mbti: 'INTJ', enneagram: '8w9', alignment: '질서 악 (Lawful Evil)', color: '#ff003c',
+            trait: '범죄 조직 사냥개의 절대적인 수장. 피도 눈물도 없이 차가운 성격을 지녔으며, 자신의 목적을 위해서라면 사람을 그저 소모품과 도구로만 취급한다.<br><br><span style="color:#f59e0b;">[아티팩트: 공허의 반지]</span> 사냥개의 은밀한 도주와 잠입을 위해 일회성 미니 포탈을 열 수 있는 희귀 장신구.'
+        },
+        'jiyeon': {
+            code: 'C', name: '한지연', role: '사냥개 멤버', race: '고양이 수인', age: '23세', height: '155cm',
+            rank: 'B급', ability: '그림자에 숨기', gear: '사슬낫', artifact: '없음',
+            mbti: 'ENFP', enneagram: '4w3', alignment: '혼돈 악 (Chaotic Evil)', color: '#ff003c',
+            trait: '얀데레, 마조히스트, 망상증을 모두 앓고 있는 위험한 고양이 수인. 암살이나 고문 같은 온갖 더러운 일들을 도맡아 하면서도 오직 자신의 \'재미\'만을 가장 중요하게 생각한다. (한국 출신)'
+        },
+
         // 교수진
         'yeonghui': { 
             code: 'c', name: '영희', role: '교장 (Principal)', race: '엘프', age: '302세', height: '159cm', 
@@ -835,7 +914,7 @@
             code: 'g', name: '샬롯', role: '도덕/윤리담당 교수', race: '마족', age: '24세', height: '145cm', 
             rank: 'A급', ability: '업화 (지옥불)', gear: '흑요석 채찍', artifact: '독심의 모노클 (B급)',
             mbti: 'ENTP', enneagram: '7w6', alignment: '혼돈 악 (Chaotic Evil)', color: '#a855f7',
-            trait: '장난스럽고 남 놀리는 것을 매우 좋아하는 전형적인 메스가키. 아이러니하게도 아카데미에서 가장 올바라야 할 도덕과 윤리를 담당하고 있다. (미국 출신)<br><br><span style="color:#f59e0b;">[아티팩트: 독심의 모노클]</span> 바라보는 대상의 얕은 속마음과 감정을 읽어낼 수 있는 B급 마도구.'
+            trait: '장난스럽고 남 놀리는 것을 매우 좋아하는 전형적인 메스가키. 아이러니하게도 아카데미에서 가장 올바라야 할 도덕과 윤리를 담당하고 있다. (미국 출신)<br><br><span style="color:#f59e0b;">[아티팩트: 독심의 모노클]</span> 바라보는 대상의 얕은 속마음과 감정을 읽어낼 수 있는 B급 마도구. 주로 학생들을 놀려먹는 데 쓰인다.'
         },
         'areum': { 
             code: 'h', name: '박아름', role: '구조/응급처치 교수', race: '천족', age: '29세', height: '164cm', 
@@ -900,54 +979,6 @@
             trait: '희귀한 혼혈로 태어나 주변의 왕따를 당하던 중, 루시퍼가 손을 내밀어주어 구원받았다. 루시퍼와는 둘도 없는 친구 사이이며 레즈비언 성향을 지녔다. (미국 출신)'
         },
 
-        // 협회 본부
-        'ahyeon_pres': {
-            code: 'D', name: '박아현', role: '협회장', race: '인류/엘프 혼혈', age: '21세', height: '160cm',
-            rank: 'C급', ability: '없음', gear: '호신용 은장도', artifact: '차원 테블릿',
-            mbti: 'ESTJ', enneagram: '1w9', alignment: '질서 중립 (Lawful Neutral)', color: '#ffffff',
-            trait: '규율을 중요하게 생각하지만 상황에 따라 유도리가 넘친다. 혼혈이지만 귀가 평범하다는 사실에 콤플렉스가 있어 놀리면 매우 화를 낸다. (한국 출신)<br><br><span style="color:#f59e0b;">[아티팩트: 차원 테블릿]</span> 공간 좌표를 강제로 뚫어 인공 게이트를 원격으로 열 수 있는 특수 통신기기.'
-        },
-
-        // 길드 마스터
-        'haneul': {
-            code: 'y', name: '박하늘', role: '아이언 이지스 길마', race: '픽시', age: '32세', height: '135cm',
-            rank: 'S급', ability: '피해 축적 후 방출', gear: '거대한 도끼', artifact: '마이크로 비키니 (S급)',
-            mbti: 'ESTP', enneagram: '8w7', alignment: '혼돈 선 (Chaotic Good)', color: '#f59e0b',
-            trait: '건방진 메스가키 스타일의 픽시 길드마스터. 파격적인 복장(비키니)과 작은 체구로 거대한 도끼를 휘두른다. 길마 중 인기가 가장 많지만 의외로 칭찬을 받으면 부끄러움을 많이 탄다. (한국 출신)<br><br><span style="color:#f59e0b;">[아티팩트: 마이크로 비키니]</span> 착용자를 절대적으로 보호하는 S급 역장과 지속적인 체력 재생 효과를 제공하는 기적의 방어구.'
-        },
-        'flare': {
-            code: 'z', name: '플레어', role: '아스트랄 코어 길마', race: '인류', age: '27세', height: '159cm',
-            rank: 'S급', ability: '원소마법', gear: '마법 지팡이', artifact: '심연의 로브 (B급)',
-            mbti: 'INFP', enneagram: '9w1', alignment: '중립 선 (Neutral Good)', color: '#a855f7',
-            trait: '기척을 줄이는 로브를 뒤집어쓰고 다니는 소심하고 부끄러움 많은 마법사. 성격과 달리 구사하는 원소마법의 화력은 가히 세계 최강 수준이다. (이탈리아 출신)<br><br><span style="color:#f59e0b;">[아티팩트: 심연의 로브]</span> 마력 파장과 존재감을 대폭 지워주어 은밀한 캐스팅을 돕는 B급 방어구.'
-        },
-        'harin': {
-            code: 'v', name: '박하린', role: '레드 뱅가드 길마', race: '상어 수인', age: '27세', height: '159cm',
-            rank: 'S급', ability: '지반 수영', gear: '톱니바퀴 대검', artifact: '아공간 반지',
-            mbti: 'ESTP', enneagram: '8w7', alignment: '혼돈 선 (Chaotic Good)', color: '#ff003c',
-            trait: '장난을 많이 치지만 길드 일은 확실하게 처리하는 믿음직한 리더. 자기 사람이라고 생각하면 한없이 관대해진다. (한국 출신)<br><br><span style="color:#f59e0b;">[아티팩트: 아공간 반지]</span> 그녀의 무거운 대검과 전리품들을 간편하게 수납할 수 있는 초소형 창고 아티팩트.'
-        },
-        'sophia': {
-            code: 'w', name: '소피아', role: '아발론 생명공학 길마', race: '마족', age: '29세', height: '160cm',
-            rank: 'A급', ability: '생명력 조작', gear: '거대한 십자가 방패', artifact: '여명의 장미 (A급)',
-            mbti: 'ISFJ', enneagram: '1w2', alignment: '질서 중립 (Lawful Neutral)', color: '#10b981',
-            trait: '인자하고 작은 일에도 자주 당황하는 신실한 성격의 수녀님. "마족 주제에 웬 수녀냐"라고 조롱한 사람들은 모두 쥐도 새도 모르게 옥살이 중이라는 흉흉한 소문이 있다.<br><br><span style="color:#f59e0b;">[아티팩트: 여명의 장미]</span> 착용자가 즉사하지만 않으면, 브로치를 소모하여 단 1번 체력을 100% 회복시키는 목숨 연장 아티팩트.'
-        },
-
-        // 범죄 조직 (사냥개)
-        'isabel': {
-            code: 'B', name: '이사벨', role: '사냥개 수장', race: '뱀 수인', age: '44세', height: '169cm',
-            rank: 'S급', ability: '신경독', gear: '맹독성 단검', artifact: '공허의 반지',
-            mbti: 'INTJ', enneagram: '8w9', alignment: '질서 악 (Lawful Evil)', color: '#ff003c',
-            trait: '범죄 조직 사냥개의 절대적인 수장. 피도 눈물도 없이 차가운 성격을 지녔으며, 자신의 목적을 위해서라면 사람을 그저 소모품과 도구로만 취급한다.<br><br><span style="color:#f59e0b;">[아티팩트: 공허의 반지]</span> 사냥개의 은밀한 도주와 잠입을 위해 일회성 미니 포탈을 열 수 있는 희귀 장신구.'
-        },
-        'jiyeon': {
-            code: 'C', name: '한지연', role: '사냥개 멤버', race: '고양이 수인', age: '23세', height: '155cm',
-            rank: 'B급', ability: '그림자에 숨기', gear: '사슬낫', artifact: '없음',
-            mbti: 'ENFP', enneagram: '4w3', alignment: '혼돈 악 (Chaotic Evil)', color: '#ff003c',
-            trait: '얀데레, 마조히스트, 망상증을 모두 앓고 있는 위험한 고양이 수인. 암살이나 고문 같은 온갖 더러운 일들을 도맡아 하면서도 오직 자신의 \'재미\'만을 가장 중요하게 생각한다. (한국 출신)'
-        },
-
         // 미관측 개체
         'evelyn': {
             code: 'G', name: '에블린', role: '게이트의 주인', race: '몬스터', age: '90세', height: '166cm',
@@ -961,7 +992,7 @@
         const overlay = document.getElementById('char-modal-overlay');
         const data = charData[nodeId];
         
-        // 미니 프로필 (1번 이미지 설정)
+        // 미니 프로필 (1번 이미지)
         const avatarEl = document.getElementById('char-modal-avatar');
         avatarEl.style.borderColor = data.color;
         avatarEl.style.boxShadow = `inset 0 0 10px ${data.color}4d`;
