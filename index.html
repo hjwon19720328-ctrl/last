@@ -54,8 +54,6 @@
 
         /* 상단 바 */
         .top-bar { display: flex; justify-content: flex-end; align-items: center; padding: 8px 15px; background: rgba(5,5,10,0.95); border-bottom: 1px solid rgba(0,243,255,0.3); position: relative; z-index: 200; gap: 12px; }
-        .bgm-credit { color: #00f3ff; text-decoration: none; font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: bold; transition: text-shadow 0.2s; }
-        .bgm-credit:hover { text-shadow: 0 0 8px #00f3ff; color: #fff; }
         #mute-btn { background: rgba(0,243,255,0.1); border: 1px solid #00f3ff; color: #00f3ff; border-radius: 4px; padding: 4px 10px; cursor: pointer; font-size: 0.8rem; font-weight: bold; transition: all 0.2s; font-family: 'Pretendard', sans-serif;}
         #mute-btn:hover { background: rgba(0,243,255,0.3); }
 
@@ -68,7 +66,7 @@
         .en-sub-sec { font-family: 'Orbitron', sans-serif; font-size: 0.6rem; margin-left: 5px; color: rgba(0,243,255,0.6); }
 
         .tab-menu { display: flex; position: sticky; top: 0; z-index: 100; background: rgba(5, 5, 10, 0.95); backdrop-filter: blur(5px); border-bottom: 1px solid rgba(0, 243, 255, 0.3); }
-        .tab-button { flex: 1; min-width: 60px; padding: 12px 0; border: none; background: none; font-size: 0.85rem; font-weight: bold; color: #4b5563; cursor: pointer; transition: all 0.3s; font-family: 'Pretendard', sans-serif; }
+        .tab-button { flex: 1; min-width: 50px; padding: 12px 0; border: none; background: none; font-size: 0.8rem; font-weight: bold; color: #4b5563; cursor: pointer; transition: all 0.3s; font-family: 'Pretendard', sans-serif; }
         .tab-button.active { color: #00f3ff; text-shadow: 0 0 8px #00f3ff; border-bottom: 2px solid #00f3ff; background: linear-gradient(0deg, rgba(0,243,255,0.1) 0%, transparent 100%); }
 
         .content-area { padding: 20px; height: calc(100vh - 170px); overflow-y: auto; }
@@ -117,7 +115,7 @@
         .sub-tab-btn.active { background: rgba(0,243,255,0.2); border-color: #00f3ff; color: #fff; text-shadow: 0 0 5px #00f3ff; box-shadow: 0 0 10px rgba(0,243,255,0.3); }
         .char-group { animation: glitchFade 0.3s ease-out; }
 
-        /* 🟢 캐릭터 미니 프로필 카드 (이미지 적용) */
+        /* 캐릭터 미니 프로필 카드 */
         .char-card { display: flex; gap: 15px; align-items: center; cursor: pointer; transition: all 0.2s; }
         .char-card:hover { border-color: #00f3ff; box-shadow: 0 0 15px rgba(0, 243, 255, 0.2); background: rgba(0, 243, 255, 0.05); }
         .char-avatar { width: 60px; height: 60px; flex-shrink: 0; background: #000; border: 1px solid #00f3ff; box-shadow: inset 0 0 10px rgba(0, 243, 255, 0.3); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; clip-path: polygon(25% 0%, 75% 0%, 100% 25%, 100% 75%, 75% 100%, 25% 100%, 0% 75%, 0% 25%); background-size: cover; background-position: center; }
@@ -178,31 +176,36 @@
 </head>
 <body>
 
+<!-- 🟢 로컬 BGM 오디오 플레이어 (같은 폴더의 BGM.mp3 파일 연동) -->
 <audio id="bgm-player" src="BGM.mp3" loop></audio>
 
 <div class="app-container">
 
+    <!-- 상단 광고 배너 -->
     <div class="ad-banner" onclick="alert('현재 재고가 모두 소진되었습니다. (품절)')">
         [AD] 📱 세계 최초 S급 마석 코어 탑재 스마트폰 출시! 한정 수량 판매 중! ►
     </div>
 
+    <!-- 로딩 화면 -->
     <div id="loading-screen">
         <div class="loader-title">SYSTEM BOOTING...</div>
         <div class="progress-bar-container"><div class="progress-bar"></div></div>
         <div class="loading-logs" id="loading-logs"><p>> CONNECTING TO SECURE SERVER...</p></div>
     </div>
     
+    <!-- 인트로 화면 -->
     <div id="intro-screen">
         <div class="intro-title">CIEL ACADEMY<br>OS<span>SYSTEM INITIALIZATION...</span></div>
         <div class="disclaimer">본 사이트는 비영리 목적으로 제작되었습니다.</div>
         <button class="enter-btn" onclick="enterSite()"></button>
     </div>
 
+    <!-- 상단 바 (로컬 음소거 컨트롤) -->
     <div class="top-bar">
-        <a href="https://youtube.com/@tooboe_john" target="_blank" class="bgm-credit">원곡자: john/tooboe</a>
         <button id="mute-btn" onclick="toggleMute()">🔊 SOUND ON</button>
     </div>
 
+    <!-- 지도 모달창 -->
     <div id="map-modal-overlay" class="modal-overlay" onclick="closeModal('map')">
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="modal-close" onclick="closeModal('map')">✕</div>
@@ -211,6 +214,7 @@
         </div>
     </div>
 
+    <!-- 캐릭터 상세 프로필 모달창 -->
     <div id="char-modal-overlay" class="modal-overlay" onclick="closeModal('char')">
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="modal-close" onclick="closeModal('char')">✕</div>
@@ -237,10 +241,12 @@
                 <p id="char-modal-trait" style="margin-top:5px;"></p>
             </div>
 
+            <!-- 이미지 갤러리 영역 -->
             <div id="char-modal-gallery" class="gallery-container"></div>
         </div>
     </div>
 
+    <!-- 라이트박스 오버레이 -->
     <div id="lightbox-overlay" onclick="closeLightbox(event)">
         <div class="lightbox-close" onclick="closeLightbox(true)">✕</div>
         <button class="lightbox-nav prev" onclick="changeImage(-1, event)">&#10094;</button>
@@ -250,18 +256,21 @@
 
     <header>
         <h1>CIEL ACADEMY</h1>
-        <p style="color:#00f3ff; font-size:0.8rem; font-family:'Orbitron';">DB_VER: NEO-HUNTER_OS v13.0</p>
+        <p style="color:#00f3ff; font-size:0.8rem; font-family:'Orbitron';">DB_VER: NEO-HUNTER_OS v14.0</p>
     </header>
 
+    <!-- 🟢 탭 메뉴 (일정 탭 추가) -->
     <div class="tab-menu">
         <button class="tab-button active" onclick="openTab('tab-world')">세계관</button>
         <button class="tab-button" onclick="openTab('tab-history')">역사</button>
+        <button class="tab-button" onclick="openTab('tab-schedule')">일정</button>
         <button class="tab-button" onclick="openTab('tab-chars')">인물</button>
         <button class="tab-button" onclick="openTab('tab-map')">지도</button>
         <button class="tab-button" onclick="openTab('tab-cmds')">명령어</button>
     </div>
 
     <div class="content-area">
+        <!-- 1. 세계관 탭 -->
         <div id="tab-world" class="tab-content active">
             <h2>세계관 및 세력 구도<span class="en-sub">WORLD & FACTIONS</span></h2>
 
@@ -383,6 +392,7 @@
             </div>
         </div>
 
+        <!-- 2. 역사 탭 -->
         <div id="tab-history" class="tab-content">
             <h2>역사 기록<span class="en-sub">HISTORY TIMELINE</span></h2>
             <div class="cyber-card" style="padding-left: 10px;">
@@ -416,6 +426,80 @@
             </div>
         </div>
 
+        <!-- 🟢 3. 일정 탭 신규 추가 -->
+        <div id="tab-schedule" class="tab-content">
+            <h2>학사 및 수업 일정<span class="en-sub">ACADEMIC SCHEDULE</span></h2>
+            
+            <h3 class="section-title">주간 수업 일정<span class="en-sub-sec">WEEKLY TIMETABLE</span></h3>
+            <div class="cyber-card">
+                <table class="terminal-table" style="font-size: 0.85rem;">
+                    <tr>
+                        <td style="color:#00f3ff; width:22%; font-weight:bold;">월 / 화</td>
+                        <td>
+                            <span class="txt-yellow">[오전]</span> 도덕 및 윤리 (담당: 샬롯)<br>
+                            <span class="txt-yellow">[오후]</span> 기초 육체 단련 (담당: 라비)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="color:#00f3ff; font-weight:bold;">수 / 목</td>
+                        <td>
+                            <span class="txt-yellow">[전일]</span> 실전 전투 및 능력 응용 (담당: 최아현)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="color:#00f3ff; font-weight:bold;">금 / 토</td>
+                        <td>
+                            <span class="txt-yellow">[오전]</span> 구조 및 응급처치 실습 (담당: 박아름)<br>
+                            <span class="txt-yellow">[오후]</span> 자율 모의전 및 개인 정비
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="color:#ff003c; font-weight:bold;">일요일</td>
+                        <td>
+                            전면 자유 시간 및 외출 (※ 섬 이탈 시 사전 허가 필수)
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <h3 class="section-title">연간 학사 일정<span class="en-sub-sec">ANNUAL CALENDAR</span></h3>
+            <div class="cyber-card" style="padding-left: 10px;">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date" style="color:#00f3ff;">3월 - 4월</div>
+                        <div class="timeline-title">1학기 개강 및 모의 실습</div>
+                        <div class="timeline-desc">입학식, 신체/마력 정밀 검사, F~C급 인공 게이트 모의 공략 실습.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date" style="color:#00f3ff;">5월 - 6월</div>
+                        <div class="timeline-title">중간평가 및 야외 생존 훈련</div>
+                        <div class="timeline-desc">전투력 측정 중간평가 진행 및 육지 산악지대에서의 1주일 무박 생존 훈련.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date" style="color:#f59e0b;">7월 - 8월</div>
+                        <div class="timeline-title">1학기 기말 및 하계 방학</div>
+                        <div class="timeline-desc">기말평가 후 4대 길드 인턴십 파견(희망자 한정) 및 하계 휴식기.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date" style="color:#00f3ff;">9월 - 10월</div>
+                        <div class="timeline-title">2학기 개강 및 합동 참관</div>
+                        <div class="timeline-desc">무기/아티팩트 일제 점검 및 현역 헌터들과의 게이트 공략 합동 참관 실습.</div>
+                    </div>
+                    <div class="timeline-item alert">
+                        <div class="timeline-date" style="color:#ff003c;">11월 - 12월</div>
+                        <div class="timeline-title">실전 레드 게이트 투입</div>
+                        <div class="timeline-desc">학년 진급을 결정짓는 최고 난이도 기말평가. 실제 레드 게이트에 투입되어 보스를 토벌해야 함.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date" style="color:#f59e0b;">1월 - 2월</div>
+                        <div class="timeline-title">동계 방학 및 졸업식</div>
+                        <div class="timeline-desc">평가 결과에 따른 진급/유급 발표, 졸업식 및 동계 휴식기.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. 인물 탭 -->
         <div id="tab-chars" class="tab-content">
             <h2>인물 데이터베이스<span class="en-sub">CHARACTER DATA</span></h2>
             
@@ -428,6 +512,7 @@
 
             <p style="font-size: 0.8rem; color: #00f3ff; margin-bottom: 15px; animation: blink 1.5s infinite;">► 캐릭터 프로필을 클릭하면 일러스트 갤러리와 상세 스탯이 출력됩니다.</p>
             
+            <!-- ====== [1] 아카데미 그룹 ====== -->
             <div class="char-group" data-group="academy">
                 <h3 class="section-title">아카데미 교수진<span class="en-sub-sec">FACULTY MEMBERS</span></h3>
                 
@@ -551,6 +636,7 @@
                 </div>
             </div>
 
+            <!-- ====== [2] 협회 / 길드 그룹 ====== -->
             <div class="char-group" data-group="guild">
                 <h3 class="section-title">헌터 협회 본부<span class="en-sub-sec">HUNTER ASSOCIATION</span></h3>
                 <div class="cyber-card char-card" onclick="showCharInfo('ahyeon_pres')">
@@ -600,6 +686,7 @@
                 </div>
             </div>
 
+            <!-- ====== [3] 사냥개 그룹 ====== -->
             <div class="char-group" data-group="hound">
                 <h3 class="section-title">사냥개 (범죄조직)<span class="en-sub-sec">THE HOUNDS</span></h3>
                 <div class="cyber-card char-card" onclick="showCharInfo('isabel')">
@@ -621,6 +708,7 @@
                 </div>
             </div>
 
+            <!-- ====== [4] 미관측 개체 (ALL에서만 보임) ====== -->
             <div class="char-group" data-group="unknown">
                 <h3 class="section-title">미관측 개체<span class="en-sub-sec">UNKNOWN ENTITY</span></h3>
                 <div class="cyber-card char-card" onclick="showCharInfo('evelyn')">
@@ -635,6 +723,7 @@
 
         </div>
 
+        <!-- 5. 지도 탭 -->
         <div id="tab-map" class="tab-content">
             <h2>레이더 스캔<span class="en-sub">LOCATION RADAR</span></h2>
             <p style="font-size: 0.8rem; color: #00f3ff; margin-bottom: 10px;">► 지도에서 거점을 클릭하여 상세 정보를 확인하세요.</p>
@@ -695,6 +784,7 @@
             </div>
         </div>
 
+        <!-- 6. 명령어 탭 -->
         <div id="tab-cmds" class="tab-content">
             <h2>시스템 명령어<span class="en-sub">SYSTEM COMMANDS</span></h2>
             <div class="cyber-card">
